@@ -1,0 +1,104 @@
+# Prerequisites
+*.d
+
+# Object files
+*.ko
+*.elf
+*.o
+
+# Linker output
+*.ilk
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.out
+*.app
+*.i*86
+*.x86_64
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+*.com
+*.class
+*.dll
+*.so
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+*.mk
+
+development/alpha-software/RDU_BLE_BaseApp/.settings/language.settings.xml
+
+development/alpha-software/RDU_BLE_BaseApp/Debug/source/
+
+development/alpha-software/RDU_BLE_BaseApp/Debug/board/boards/
+
+development/alpha-software/RDU_BLE_BaseApp/Debug/drivers/
+
+development/alpha-software/RDU_BLE_BaseApp/Debug/component/lists/
+
+development/alpha-software/RDU_BLE_BaseApp/Debug/component/serial_manager/
+
+development/alpha-software/RDU_BLE_BaseApp/Debug/component/uart/
+
+development/alpha-software/RDU_BLE_BaseApp/Debug/device/
+
+development/alpha-software/.mcuxpressoide_packages_support/MKW38A512xxx4_support/
+
+development/alpha-software/.mcuxpressoide_packages_support/MKW37Z512xxx4_support/
+
+development/alpha-software/.mcuxpressoide_packages_support/
+
+
+development/alpha-software/battery_odometer/.settings/
