@@ -25,8 +25,6 @@
 #include "board.h"
 #include "clock_config.h"
 #include "DCDC.h"
-#include "Keyboard.h"
-#include "SerialManager.h"
 #if defined(gAppUseNvm_d) && (gAppUseNvm_d==1)
 #include "NVM_Interface.h"
 #endif
@@ -523,7 +521,6 @@ static void PWR_ProcessWakeupReason(void)
 extern void BleApp_HandleKeys(key_event_t events);
         BleApp_HandleKeys(gKBD_EventPressPB2_c);
 #else
-        KBD_SwitchPressedOnWakeUp();
 #endif
         PWRLib_MCU_WakeupReason.Bits.FromKeyBoard = 0U;
     }

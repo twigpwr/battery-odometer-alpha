@@ -86,7 +86,7 @@
 #define gTMR_EnableLowPowerTimers_d     1
 
 /* Enable/Disable PowerDown functionality in PwrLib */
-#define cPWR_UsePowerDownMode           1
+#define cPWR_UsePowerDownMode           0
 
 /* Enable/Disable BLE Link Layer DSM */
 #define cPWR_BLE_LL_Enable              1

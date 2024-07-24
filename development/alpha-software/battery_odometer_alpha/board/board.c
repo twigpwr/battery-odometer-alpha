@@ -21,7 +21,6 @@
 #include "pin_mux.h"
 #include "fsl_pmc.h"
 #include "fsl_adc16.h"
-#include "GPIO_Adapter.h"
 #include "TMR_Adapter.h"
 #include "RNG_Interface.h"
 #include "FunctionLib.h"
@@ -39,8 +38,6 @@
 #include "DCDC.h"
 #endif
 
-#include "Keyboard.h"
-#include "SerialManager.h"
 #include "Flash_Adapter.h"
 #include "fsl_rtc.h"
 
@@ -173,8 +170,6 @@ extern uint16_t gcov_FULL_BAT;
 
 #if defined(gBoard_ManageSwdPinsInLowPower_d) && (gBoard_ManageSwdPinsInLowPower_d > 0)
 /* Variables to store the PCR register value for SWD_DIO and SWD_CLK pins */
-static uint32_t mSWDIO_PCR_Save;
-static uint32_t mSWDCLK_PCR_Save;
 #endif
 
 /* 32MHz Xtal trim */
@@ -555,21 +550,9 @@ static void BOARD_SetSWDPinsLowPower(bool_t isLowPower)
 
     if(isLowPower)
     {
-        /* Store SWDIO PCR value */
-        mSWDIO_PCR_Save = GpioGetPinPCR(gpioPort_A_c, 0);
-        /* Store SWDCLK PCR value */
-        mSWDCLK_PCR_Save = GpioGetPinPCR(gpioPort_A_c, 1);
-        /* Disable SWDIO pin */
-        GpioSetPinMux_ISF_Preserved(gpioPort_A_c, 0, pinMux_PinDisabledOrAnalog_c);
-        /* Disable SWDCLK pin */
-        GpioSetPinMux_ISF_Preserved(gpioPort_A_c, 1, pinMux_PinDisabledOrAnalog_c);
     }
     else
     {
-        /* Enable SWDIO pin */
-        GpioSetPinPCR_ISF_Preserved(gpioPort_A_c, 0, mSWDIO_PCR_Save);
-        /* Disable SWDIO pin */
-        GpioSetPinPCR_ISF_Preserved(gpioPort_A_c, 1, mSWDCLK_PCR_Save);
     }
 
     /* Restore PORTA clock settings */
@@ -685,7 +668,6 @@ void BOARD_ExitLowPowerVllsCb(void)
 
     /* Reinit button pins
         Note : Keyboard pin reinit is done directly in KBD_PrepareExitLowPower */
-    BOARD_InitButtons();
 
 #if (gKeyBoardSupported_d && (!defined(gDbgUseDtest) || (gDbgUseDtest == 0)))
     /* Reinit GPIO for Keyboard module */

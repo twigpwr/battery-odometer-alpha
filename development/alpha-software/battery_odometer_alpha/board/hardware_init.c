@@ -25,7 +25,5 @@ void BOARD_InitHardware(void)
     PWR_SetWakeupPinsSerial(BOARD_WAKEUP_PIN_SERIAL_BITMAP, BOARD_GetSerialManagerInterface());
 #endif
 
-    /* Configure the keyboard wakeup pin */
-    PWR_SetWakeupPins(BOARD_WAKEUP_PIN_KEYBOARD_BITMAP);
 }
 /*${function:end}*/

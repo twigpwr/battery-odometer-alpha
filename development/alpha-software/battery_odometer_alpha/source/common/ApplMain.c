@@ -15,7 +15,6 @@
 *************************************************************************************
 ************************************************************************************/
 /* Drv */
-#include "LED.h"
 
 /* Fwk */
 #include "fsl_os_abstraction.h"
@@ -36,9 +35,6 @@
 
 /* KSDK */
 #include "board.h"
-#if defined(MULTICORE_CONNECTIVITY_CORE) && (MULTICORE_CONNECTIVITY_CORE)
-#include "fsl_cau3.h"
-#endif
 
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
 #include "PWR_Interface.h"
@@ -65,12 +61,6 @@
 #if (defined(BOARD_XTAL1_CLK_HZ) && (BOARD_XTAL1_CLK_HZ != CLK_XTAL_32KHZ))
 #include "rco32k_calibration.h"
 #endif /* BOARD_XTAL1_CLK_HZ != CLK_XTAL_32KHZ */
-#endif
-
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) || (gFsciBleTest_d == 1))
-#include "fsci_ble_gap.h"
-#include "fsci_ble_gatt.h"
-#include "fsci_ble_l2cap_cb.h"
 #endif
 
 /************************************************************************************
@@ -116,11 +106,7 @@
 #define mAppTaskWaitTime_c (osaWaitForever_c)
 #endif
 
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE)
-#define MULTICORE_STATIC
-#else
 #define MULTICORE_STATIC STATIC
-#endif
 
 
 /************************************************************************************
@@ -412,17 +398,9 @@ void main_task(uint32_t param)
         NV_Init();
 #endif
         TMR_Init();
-
-        /* Cryptographic and RNG hardware initialization */
-#if defined(MULTICORE_CONNECTIVITY_CORE) && (MULTICORE_CONNECTIVITY_CORE)
-        /* Make sure the clock is provided by M0+ in order to avoid issues after exiting low power mode from M0+ */
-        CLOCK_EnableClock(kCLOCK_Cau3);
 #if defined(FSL_CAU3_USE_HW_SEMA) && (FSL_CAU3_USE_HW_SEMA > 0)
         CLOCK_EnableClock(FSL_CAU3_SEMA42_CLOCK_NAME);
 #endif /* FSL_CAU3_USE_HW_SEMA */
-#else
-        SecLib_Init();
-#endif
 
         /* Set external multiplication callback if we don't have support for hardware elliptic curve
          * multiplication */
@@ -431,15 +409,10 @@ void main_task(uint32_t param)
         SecLib_SetExternalMultiplicationCb(App_SecLibMultCallback);
 #endif
 
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE)
-        Board_StartSecondaryCoreApp();
-        CLOCK_DisableClock(kCLOCK_Cau3);
-#else
         /* RNG software initialization and PRNG initial seeding (from hardware) */
         (void)RNG_Init();
         RNG_SetPseudoRandomNoSeed(NULL);
-#endif /* MULTICORE_APPLICATION_CORE */
-        LED_Init();
+
 #if gKeyBoardSupported_d && (gKBD_KeysCount_c > 0)
         KBD_Init(App_KeyboardCallBack);
 #endif
@@ -467,10 +440,10 @@ void main_task(uint32_t param)
         PWR_Init();
         PWR_DisallowDeviceToSleep();
 #else
-        Led1Flashing();
-        Led2Flashing();
-        Led3Flashing();
-        Led4Flashing();
+//        Led1Flashing();
+//        Led2Flashing();
+//        Led3Flashing();
+//        Led4Flashing();
 #endif
 
         /* Initialize peripheral drivers specific to the application */
@@ -638,9 +611,7 @@ static void App_Idle(void)
         {
 #if defined(cPWR_EnableDeepSleepMode_8) && (cPWR_EnableDeepSleepMode_8)
             /* Skip over the key scan timer to improve low power consumption. */
-            BleApp_HandleKeys(gKBD_EventPressPB1_c);
 #else
-            KBD_SwitchPressedOnWakeUp();
 #endif
         }
 #endif
@@ -1612,9 +1583,6 @@ static void App_HandleHostMessageInput(appMsgFromHost_t* pMsg)
 ********************************************************************************** */
 MULTICORE_STATIC void App_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent)
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) || (gFsciBleTest_d == 1))
-    fsciBleGapConnectionEvtMonitor(peerDeviceId, pConnectionEvent);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
 
     uint32_t msgLen = sizeof(uint32_t) + sizeof(connectionMsg_t);
@@ -1723,7 +1691,6 @@ MULTICORE_STATIC void App_ConnectionCallback (deviceId_t peerDeviceId, gapConnec
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************
@@ -1736,9 +1703,6 @@ MULTICORE_STATIC void App_ConnectionCallback (deviceId_t peerDeviceId, gapConnec
 ********************************************************************************** */
 MULTICORE_STATIC void App_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent)
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) || (gFsciBleTest_d == 1))
-    fsciBleGapAdvertisingEvtMonitor(pAdvertisingEvent);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
 
     pMsgIn = MSG_Alloc(sizeof(uint32_t) + sizeof(gapAdvertisingEvent_t));
@@ -1757,7 +1721,6 @@ MULTICORE_STATIC void App_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisi
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************
@@ -1770,9 +1733,6 @@ MULTICORE_STATIC void App_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisi
 ********************************************************************************** */
 MULTICORE_STATIC void App_ScanningCallback (gapScanningEvent_t* pScanningEvent)
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) || (gFsciBleTest_d == 1))
-    fsciBleGapScanningEvtMonitor(pScanningEvent);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
 
     uint32_t msgLen = sizeof(uint32_t) + sizeof(gapScanningEvent_t);
@@ -1865,7 +1825,6 @@ MULTICORE_STATIC void App_ScanningCallback (gapScanningEvent_t* pScanningEvent)
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************
@@ -1883,9 +1842,6 @@ MULTICORE_STATIC void App_GattServerCallback
     gattServerEvent_t*  pServerEvent
 )
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) )
-    fsciBleGattServerEvtMonitor(peerDeviceId, pServerEvent);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
     uint32_t msgLen = sizeof(uint32_t) + sizeof(gattServerMsg_t);
 
@@ -1923,7 +1879,6 @@ MULTICORE_STATIC void App_GattServerCallback
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************
@@ -1944,9 +1899,6 @@ MULTICORE_STATIC void App_GattClientProcedureCallback
     gattProcedureResult_t   procedureResult,
     bleResult_t             error)
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) )
-    fsciBleGattClientProcedureEvtMonitor(deviceId, procedureType, procedureResult, error);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
 
     pMsgIn = MSG_Alloc(sizeof(uint32_t) + sizeof(gattClientProcMsg_t));
@@ -1967,7 +1919,6 @@ MULTICORE_STATIC void App_GattClientProcedureCallback
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************
@@ -1989,9 +1940,6 @@ MULTICORE_STATIC void App_GattClientNotificationCallback
     uint16_t        valueLength
 )
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) )
-    fsciBleGattClientNotificationEvtMonitor(deviceId, characteristicValueHandle, aValue, valueLength);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
 
     /* Allocate a buffer with enough space to store also the notified value*/
@@ -2016,7 +1964,6 @@ MULTICORE_STATIC void App_GattClientNotificationCallback
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************
@@ -2038,9 +1985,6 @@ MULTICORE_STATIC void App_GattClientIndicationCallback
     uint16_t        valueLength
 )
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) )
-    fsciBleGattClientIndicationEvtMonitor(deviceId, characteristicValueHandle, aValue, valueLength);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
 
     /* Allocate a buffer with enough space to store also the notified value*/
@@ -2066,7 +2010,6 @@ MULTICORE_STATIC void App_GattClientIndicationCallback
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************
@@ -2088,9 +2031,6 @@ MULTICORE_STATIC void App_L2caLeDataCallback
     uint16_t packetLength
 )
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) )
-    fsciBleL2capCbLeCbDataEvtMonitor(deviceId, channelId, pPacket, packetLength);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
 
     /* Allocate a buffer with enough space to store the packet */
@@ -2114,7 +2054,6 @@ MULTICORE_STATIC void App_L2caLeDataCallback
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************
@@ -2130,9 +2069,6 @@ MULTICORE_STATIC void App_L2caLeControlCallback
     l2capControlMessage_t* pMessage
 )
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) && ((gFsciBleBBox_d == 1) )
-    fsciBleL2capCbLeCbControlEvtMonitor(pMessage);
-#else
     appMsgFromHost_t *pMsgIn = NULL;
     uint8_t messageLength = 0U;
 
@@ -2197,7 +2133,6 @@ MULTICORE_STATIC void App_L2caLeControlCallback
 
     /* Signal application */
     (void)OSA_EventSet(mAppEvent, gAppEvtMsgFromHostStack_c);
-#endif /* (MULTICORE_APPLICATION_CORE == 1) && (gFsciBleBBox_d == 1) */
 }
 
 /*! *********************************************************************************

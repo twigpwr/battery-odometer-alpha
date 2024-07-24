@@ -22,11 +22,7 @@
 #include "gap_interface.h"
 #include "ble_constants.h"
 
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-#include "dynamic_gatt_database.h"
-#else
 #include "gatt_db_handles.h"
-#endif
 
 /************************************************************************************
 *************************************************************************************

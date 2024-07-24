@@ -21,15 +21,12 @@
 ************************************************************************************/
 /* Framework / Drivers */
 #include "RNG_Interface.h"
-#include "Keyboard.h"
-#include "LED.h"
 #include "TimersManager.h"
 #include "FunctionLib.h"
 #include "MemManager.h"
 #include "Panic.h"
 
 #if defined(cPWR_BleAppHandleKeyDirectCall_d) && (cPWR_BleAppHandleKeyDirectCall_d > 0)
-#include "GPIO_Adapter.h"
 #endif
 
 #if (cPWR_UsePowerDownMode)
@@ -42,11 +39,7 @@
 #include "gatt_client_interface.h"
 #include "gap_interface.h"
 
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-#include "dynamic_gatt_database.h"
-#else
 #include "gatt_db_handles.h"
-#endif
 
 /* Profile / Services */
 #include "battery_interface.h"
@@ -59,11 +52,6 @@
 #include "board.h"
 #include "ApplMain.h"
 #include "heart_rate_sensor.h"
-
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-#include "erpc_host.h"
-#include "dynamic_gatt_database.h"
-#endif
 
 /************************************************************************************
 *************************************************************************************
@@ -172,11 +160,6 @@ void BleApp_Init(void)
 {
     /* Initialize application support for drivers */
     BOARD_InitAdc();
-
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-    /* Init eRPC host */
-    init_erpc_host();
-#endif
 }
 
 /*! *********************************************************************************
@@ -201,13 +184,7 @@ void BleApp_Start(void)
             mAdvState.advType = fastAdvState_c;
         }
 #if (cPWR_UsePowerDownMode)
-    #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-        #if gErpcLowPowerApiServiceIncluded_c
-            PWR_ChangeBlackBoxDeepSleepMode(gAppDeepSleepMode_c);
-        #endif
-    #else /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
         PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
-    #endif
 #endif
         BleApp_Advertise();
     }
@@ -233,103 +210,6 @@ static void BleApp_StartApplicationCallback(appCallbackParam_t pParam)
 *
 * \param[in]    events    Key event structure.
 ********************************************************************************** */
-void BleApp_HandleKeys(key_event_t events)
-{
-#if (cPWR_UsePowerDownMode)
-#if defined(cPWR_BleAppHandleKeyDirectCall_d) && (cPWR_BleAppHandleKeyDirectCall_d > 0)
-    uint32_t switch_level;
-#endif
-    switch (events)
-    {
-        case gKBD_EventPressPB1_c:
-        case gKBD_EventPressPB2_c:
-        {
-#if defined(cPWR_BleAppHandleKeyDirectCall_d) && (cPWR_BleAppHandleKeyDirectCall_d > 0)
-            /* Read the switch level. If it is kept low it will prevent flashing issues
-               with CMSIS-DAP probe while the MCU is in lowpower state */
-            switch_level = GpioReadPinInput(&switchPins[0]);
-
-            if(PWR_CheckIfDeviceCanGoToSleep() && (switch_level == 0U))
-            {
-                PWR_DisallowDeviceToSleep();
-                break;
-            }
-
-            /* We are in either application Idle task or FreeRTOS idle task context,
-               if tickless mode is used. We cannot start the application from here
-               because the MCU will be soon put into low-power mode. Thus, we post a
-               message to Application task queue, preventing this way the entering in
-               low power and the correct configuration and start of the application */
-
-            App_PostCallbackMessage(BleApp_StartApplicationCallback, (void*)(mStartApplication_c));
-
-#else
-            if (mPeerDeviceId == gInvalidDeviceId_c)
-            {
-                BleApp_Start();
-            }
-#endif
-        }
-        break;
-
-        case gKBD_EventLongPB1_c:
-        case gKBD_EventLongPB2_c:
-        {
-            if (mPeerDeviceId != gInvalidDeviceId_c)
-            {
-                Gap_Disconnect(mPeerDeviceId);
-            }
-        }
-        break;
-
-        default:
-        {
-            ; /* No action required */
-        }
-        break;
-    }
-#else
-    switch (events)
-    {
-        case gKBD_EventPressPB1_c:
-        {
-            mToggle16BitHeartRate = (mToggle16BitHeartRate)?FALSE:TRUE;
-        }
-        break;
-
-        case gKBD_EventPressPB2_c:
-        {
-            if (mPeerDeviceId == gInvalidDeviceId_c)
-            {
-                BleApp_Start();
-            }
-        }
-        break;
-
-        case gKBD_EventLongPB1_c:
-        {
-            if (mPeerDeviceId != gInvalidDeviceId_c)
-            {
-                Gap_Disconnect(mPeerDeviceId);
-            }
-        }
-        break;
-
-        case gKBD_EventLongPB2_c:
-        {
-            mContactStatus = mContactStatus?FALSE:TRUE;
-            Hrs_SetContactStatus(service_heart_rate, mContactStatus);
-        }
-        break;
-
-        default:
-        {
-            ; /* No action required */
-        }
-        break;
-    }
-#endif
-}
 
 /*! *********************************************************************************
 * \brief        Handles BLE generic callback.
@@ -388,13 +268,6 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
 ********************************************************************************** */
 static void BleApp_Config()
 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-    if (GattDbDynamic_CreateDatabase() != gBleSuccess_c)
-    {
-        panic(0,0,0,0);
-        return;
-    }
-#endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
 
     /* Common GAP configuration */
     BleConnManager_GapCommonConfig();
@@ -420,17 +293,8 @@ static void BleApp_Config()
     mMeasurementTimerId = TMR_AllocateTimer();
     mBatteryMeasurementTimerId = TMR_AllocateTimer();
 #if (cPWR_UsePowerDownMode)
-    #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-        #if gErpcLowPowerApiServiceIncluded_c
-            PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
-            PWR_AllowBlackBoxToSleep();
-        #endif
         PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
         PWR_AllowDeviceToSleep();
-    #else
-        PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-        PWR_AllowDeviceToSleep();
-    #endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
 #endif
 }
 
@@ -506,31 +370,19 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 #if (cPWR_UsePowerDownMode)
             if(!mAdvState.advOn)
             {
-                Led1Off();
-                #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-                    #if gErpcLowPowerApiServiceIncluded_c
-                        PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
-                    #endif
-                #else
                     PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-                #endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
             }
             else
             {
                 /* Start advertising timer */
                 TMR_StartLowPowerTimer(mAdvTimerId,gTmrLowPowerSecondTimer_c,
                          TmrSeconds(mAdvTimeout), AdvertisingTimerCallback, NULL);
-                Led1On();
             }
 #else
-            LED_StopFlashingAllLeds();
-            Led1Flashing();
 
             if(!mAdvState.advOn)
             {
-                Led2Flashing();
-                Led3Flashing();
-                Led4Flashing();
+
             }
             else
             {
@@ -592,21 +444,14 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                        TmrSeconds(mBatteryLevelReportInterval_c), BatteryMeasurementTimerCallback, NULL);
 
 #if (cPWR_UsePowerDownMode)
-            #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-                #if gErpcLowPowerApiServiceIncluded_c
-                    PWR_ChangeBlackBoxDeepSleepMode(gAppDeepSleepMode_c);
-                    PWR_AllowBlackBoxToSleep();
-                #endif
-            #else
                 PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
 #if (!defined(CPU_MKW37A512VFT4) && !defined(CPU_MKW37Z512VFT4) && !defined(CPU_MKW38A512VFT4) && !defined(CPU_MKW38Z512VFT4) && !defined(CPU_MKW39A512VFT4) && !defined(CPU_MKW39Z512VFT4))
                 PWR_AllowDeviceToSleep();
 #endif /* CPU_MKW37xxx, CPU_MKW38xxx and CPU_MKW39xxx*/
-            #endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
 #else
             /* UI */
-            LED_StopFlashingAllLeds();
-            Led1On();
+//            LED_StopFlashingAllLeds();
+//            Led1On();
 #endif
         }
         break;
@@ -624,16 +469,8 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
 
 #if (cPWR_UsePowerDownMode)
             /* UI */
-            Led1Off();
 
-            /* Go to sleep */
-    #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
-        #if gErpcLowPowerApiServiceIncluded_c
-            PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
-        #endif
-    #else
             PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-    #endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
 #else
             /* Restart advertising*/
             BleApp_Start();
