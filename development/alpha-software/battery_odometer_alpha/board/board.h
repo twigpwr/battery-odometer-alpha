@@ -17,7 +17,7 @@
  ******************************************************************************/
 /*! @brief The board name */
 #define BOARD_NAME "FRDM-KW38"
-#define MANUFACTURER_NAME               "NXP"
+#define MANUFACTURER_NAME               "TWIG"
 
 /*! @brief The UART to use for debug messages. */
 #define BOARD_USE_LPUART

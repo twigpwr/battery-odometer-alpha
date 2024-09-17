@@ -1,6 +1,6 @@
 Overview
 ========
-This application implements a GATT based Heart Rate Service.
+This application implements a GATT based Cycling Speed and Cadence Service.
 To test the service/profile the Kinetis BLE Toolbox application can be used which is available for both Android and iOS.
 For more information, please consult the "BLE Demo Applications User's Guide".
 
@@ -17,7 +17,6 @@ Hardware requirements
 Board settings
 ==============
 No special board setting.
-To flash the board in case the sensor is put in deep sleep, press SW3 or RESET.
 
 Prepare the Demo
 ================

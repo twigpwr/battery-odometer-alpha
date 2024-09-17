@@ -805,6 +805,62 @@ void* MEM_BufferAllocWithId(uint32_t numBytes, uint8_t  poolId, void *pCaller)
     return (void*)pBlock;
 }
 
+#if 0
+/*! *********************************************************************************
+* \brief     Deallocate a memory block by putting it in the corresponding pool
+*            of free blocks.
+*
+* \param[in] buffer - Pointer to buffer to deallocate.
+*
+* \return MEM_SUCCESS_c if deallocation was successful, MEM_FREE_ERROR_c if not.
+*
+* \pre Memory manager must be previously initialized.
+*
+* \remarks Never deallocate the same buffer twice.
+*
+********************************************************************************** */
+#if (defined MULTICORE_MEM_MANAGER) && ((MULTICORE_APPLICATION_CORE) || (MULTICORE_CONNECTIVITY_CORE))
+#if MULTICORE_APPLICATION_CORE
+memStatus_t MEM_BufferFreeOnMaster
+#elif MULTICORE_CONNECTIVITY_CORE
+memStatus_t MEM_BufferFreeOnSlave
+#endif /* MULTICORE_APPLICATION_CORE */
+(
+    uint8_t *pBuff
+)
+{
+#ifdef MEM_TRACKING
+    /* Save the Link Register */
+    volatile uint32_t savedLR = (uint32_t) __get_LR();
+#endif /*MEM_TRACKING*/
+    listHeader_t *pHeader;
+    memStatus_t status;
+
+    if( pBuff == NULL )
+    {
+        status = MEM_FREE_ERROR_c;
+    }
+    else
+    {
+        pHeader = (listHeader_t *)pBuff-1;
+
+        if( ((uint8_t*)pHeader < (uint8_t*)memHeap) || ((uint8_t*)pHeader > ((uint8_t*)memHeap + sizeof(memHeap))) )
+        {
+#ifdef MEM_DEBUG_INVALID_POINTERS
+            panic( 0, (uint32_t)MEM_BufferFree, 0, 0);
+#endif
+            status = MEM_FREE_ERROR_c;
+        }
+        else
+        {
+            status = MEM_BufferFree(pBuff);
+        }
+    }
+    return status;
+}
+#endif /* (defined MULTICORE_MEM_MANAGER) && ((MULTICORE_APPLICATION_CORE) || (MULTICORE_CONNECTIVITY_CORE)) */
+#endif
+
 memStatus_t MEM_BufferFree
 (
 void* buffer /* IN: Block of memory to free*/
@@ -843,10 +899,16 @@ void* buffer /* IN: Block of memory to free*/
 
         if( ((uint8_t*)pHeader < (uint8_t*)memHeap) || ((uint8_t*)pHeader > ((uint8_t*)memHeap + sizeof(memHeap))) )
         {
+#if (defined MULTICORE_MEM_MANAGER) && (MULTICORE_CONNECTIVITY_CORE)
+            status = MEM_BufferFreeOnMaster(buffer);
+#elif (defined MULTICORE_MEM_MANAGER) && (MULTICORE_APPLICATION_CORE)
+            status = MEM_BufferFreeOnSlave(buffer);
+#else
 #ifdef MEM_DEBUG_INVALID_POINTERS
             panic( 0, (uint32_t)MEM_BufferFree, 0, 0);
 #endif
             status = MEM_FREE_ERROR_c;
+#endif
         }
         else
         {

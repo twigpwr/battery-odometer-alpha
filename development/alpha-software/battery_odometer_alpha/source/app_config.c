@@ -22,7 +22,11 @@
 #include "gap_interface.h"
 #include "ble_constants.h"
 
+#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
+#include "dynamic_gatt_database.h"
+#else
 #include "gatt_db_handles.h"
+#endif
 
 /************************************************************************************
 *************************************************************************************
@@ -59,8 +63,9 @@ gapAdvertisingParameters_t gAdvParams = {
 
 /* Scanning and Advertising Data */
 static uint8_t adData0[1] =  { (gapAdTypeFlags_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
-static uint8_t adData1[2] = { UuidArray(gBleSig_HeartRateService_d) };
-static gapAdStructure_t advScanStruct[3] = {
+static uint8_t adData1[2] = { UuidArray(gBleSig_GenericAttributeProfile_d)};
+static uint8_t adData2[2] = { UuidArray(gUnknown_c) };
+static gapAdStructure_t advScanStruct[] = {
   {
     .length = NumberOfElements(adData0) + 1,
     .adType = gAdFlags_c,
@@ -72,9 +77,14 @@ static gapAdStructure_t advScanStruct[3] = {
     .aData = (uint8_t *)adData1
   },  
   {
+    .length = NumberOfElements(adData2) + 1,
+    .adType = gAdAppearance_c,
+    .aData = (uint8_t *)adData2
+  },  
+  {
     .adType = gAdShortenedLocalName_c,
     .length = 8,
-    .aData = (uint8_t*)"NXP_HRS"
+    .aData = (uint8_t *)"TWIG_BLE"
   }  
 };
 
@@ -93,13 +103,13 @@ gapScanResponseData_t gAppScanRspData =
 /* SMP Data */
 gapPairingParameters_t gPairingParameters = {
     .withBonding = (bool_t)gAppUseBonding_d,
-    .securityModeAndLevel = gSecurityMode_1_Level_3_c,
+    .securityModeAndLevel = gSecurityMode_1_Level_1_c,
     .maxEncryptionKeySize = mcEncryptionKeySize_c,
     .localIoCapabilities = gIoDisplayOnly_c,
     .oobAvailable = FALSE,
     .centralKeys = gIrk_c, 
     .peripheralKeys = (gapSmpKeyFlags_t)(gLtk_c | gIrk_c),
-    .leSecureConnectionSupported = TRUE,
+    .leSecureConnectionSupported = FALSE,
     .useKeypressNotifications = FALSE,
 };
 
@@ -137,15 +147,7 @@ static gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequ
 static gapServiceSecurityRequirements_t serviceSecurity[3] = {
   {
     .requirements = {
-        .securityModeLevel = gSecurityMode_1_Level_3_c,
-        .authorization = FALSE,
-        .minimumEncryptionKeySize = gDefaultEncryptionKeySize_d
-    },
-    .serviceHandle = (uint16_t)service_heart_rate
-  },
-  {
-    .requirements = {
-        .securityModeLevel = gSecurityMode_1_Level_3_c,
+        .securityModeLevel = gSecurityMode_1_Level_1_c,
         .authorization = FALSE,
         .minimumEncryptionKeySize = gDefaultEncryptionKeySize_d
     },
@@ -153,11 +155,19 @@ static gapServiceSecurityRequirements_t serviceSecurity[3] = {
   },
   {
     .requirements = {
-        .securityModeLevel = gSecurityMode_1_Level_3_c,
+        .securityModeLevel = gSecurityMode_1_Level_1_c,
         .authorization = FALSE,
         .minimumEncryptionKeySize = gDefaultEncryptionKeySize_d
     },
     .serviceHandle = (uint16_t)service_device_info
+  },
+  {
+	  .requirements = {
+		  .securityModeLevel = gSecurityMode_1_Level_1_c,
+		  .authorization = FALSE,
+		  .minimumEncryptionKeySize = gDefaultEncryptionKeySize_d
+	  },
+	  .serviceHandle = (uint16_t)service_odometer
   }
 };
 

@@ -10,11 +10,8 @@
  * Included files
  **********************************************************************************************************************/
 #include "fsl_common.h"
-#include "fsl_dspi.h"
-#include "fsl_adc16.h"
 #include "fsl_flexcan.h"
 #include "fsl_clock.h"
-#include "fsl_cop.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -24,51 +21,14 @@ extern "C" {
  * Definitions
  **********************************************************************************************************************/
 /* Definitions for BOARD_InitPeripherals functional group */
-/* BOARD_InitPeripherals defines for SPI1 */
-/* Definition of peripheral ID */
-#define SPI1_PERIPHERAL SPI1
-/* Definition of the clock source */
-#define SPI1_CLOCK_SOURCE DSPI1_CLK_SRC
-/* Definition of the clock source frequency */
-#define SPI1_CLK_FREQ CLOCK_GetFreq(SPI1_CLOCK_SOURCE)
-/* Alias for ADC0 peripheral */
-#define ADC0_PERIPHERAL ADC0
-/* ADC0 interrupt vector ID (number). */
-#define ADC0_IRQN ADC0_IRQn
-/* ADC0 interrupt handler identifier. */
-#define ADC0_IRQHANDLER ADC0_IRQHandler
-/* Channel 0 (SE.2) conversion control group. */
-#define ADC0_CH0_CONTROL_GROUP 0
-/* Channel 1 (SE.4) conversion control group. */
-#define ADC0_CH1_CONTROL_GROUP 0
-/* Channel 2 (SE.1) conversion control group. */
-#define ADC0_CH2_CONTROL_GROUP 0
-/* Channel 3 (SE.5) conversion control group. */
-#define ADC0_CH3_CONTROL_GROUP 0
-/* Channel 4 (SE.3) conversion control group. */
-#define ADC0_CH4_CONTROL_GROUP 0
 /* Definition of peripheral ID */
 #define CAN0_PERIPHERAL CAN0
 /* Definition of the clock source frequency */
 #define CAN0_CLOCK_SOURCE 16000000UL
-/* Definition of peripheral ID */
-#define SIM_PERIPHERAL SIM
-/* BOARD_InitPeripherals defines for SPI0 */
-/* Definition of peripheral ID */
-#define SPI0_PERIPHERAL SPI0
-/* Definition of the clock source */
-#define SPI0_CLOCK_SOURCE DSPI0_CLK_SRC
-/* Definition of the clock source frequency */
-#define SPI0_CLK_FREQ CLOCK_GetFreq(SPI0_CLOCK_SOURCE)
 
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
-extern const dspi_master_config_t SPI1_config;
-extern adc16_channel_config_t ADC0_channelsConfig[5];
-extern const adc16_config_t ADC0_config;
-extern const adc16_channel_mux_mode_t ADC0_muxMode;
-extern const adc16_hardware_average_mode_t ADC0_hardwareAverageMode;
 extern const flexcan_config_t CAN0_config;
 /* Message buffer 0 configuration structure */
 extern const flexcan_rx_mb_config_t CAN0_rx_mb_config_0;
@@ -78,8 +38,6 @@ extern flexcan_frame_t FrameRx;
 extern const flexcan_mb_transfer_t CAN0_rx_mb_transfer;
 extern flexcan_frame_t FrameTx;
 extern const flexcan_mb_transfer_t CAN0_tx_mb_transfer;
-extern const cop_config_t SIM_config;
-extern const dspi_master_config_t SPI0_config;
 
 /***********************************************************************************************************************
  * Initialization functions

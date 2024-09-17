@@ -12,65 +12,17 @@ processor: MKW38A512xxx4
 package_id: MKW38A512VFT4
 mcu_data: ksdk2_0
 processor_version: 9.0.1
-board: FRDM-KW38
 pin_labels:
-- {pin_num: '23', pin_signal: ADC0_SE4/CMP0_IN2/PTB18/LPUART1_CTS_b/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b, label: 'SW2/J4[2]/A1/SW2/VREG_12V_IMON_MCU/VREG_12V_IMON_MCU/TKS0_MCU/ADC4',
-  identifier: SW2;VREG_12V_IMON_MCU;TKS0_MCU;VSENSE}
-- {pin_num: '38', pin_signal: PTC2/LLWU_P10/TX_SWITCH/I2C1_SCL/LPUART0_RX/CMT_IRO/DTM_RX/SPI1_SOUT, label: SW3/SPI1_MOSI, identifier: SW3;SPI0_;SPI0_MOSI;SPI1_MOSI}
-- {pin_num: '18', pin_signal: ADC0_SE3/CMP0_IN3/PTB2/RF_NOT_ALLOWED/LLWU_P9/DTM_TX/TPM0_CH0/TPM1_CH0/TPM2_CH0, label: 'LED_B/J4[3]/Q3[1]/A2/LEDRGB_BLUE/ETS_PWR_MEAS_MCU/ADC2/ETS_PWR_MEAS_MCU/ADC2/ETS_PWR_MEAS_MCU/ADC2',
-  identifier: LED_B;LED_BLUE;ETS_PWR_MEAS_MCU;BATT_V}
-- {pin_num: '4', pin_signal: PTA16/LLWU_P4/SPI1_SOUT/LPUART1_RTS_b/TPM0_CH0, label: 'LED_G/J2[1]/Q2[1]/D8/LEDRGB_GREEN/TEST_PASSED_LED/TEST_PASSED_LED/BATT_FAULT_LED',
-  identifier: LED_G;LED_GREEN;TEST_PASSED_LED;BATT_FAULT_LED}
-- {pin_num: '37', pin_signal: PTC1/RF_EARLY_WARNING/ANT_B/I2C0_SDA/LPUART0_RTS_b/TPM0_CH2/SPI1_SCK, label: LED_R/SPI1_CLK, identifier: LED_R;LED_RED;SPI0_CLK;SPI1_CLK}
-- {pin_num: '42', pin_signal: PTC6/LLWU_P14/RF_RFOSC_EN/I2C1_SCL/LPUART0_RX/TPM2_CH0, label: 'LPUART0_RX/J8[1]/U4[4]/U5[25]/UART0_RX_TGTMCU/PROP_ACT_LED/PROP_ACT_LED/PROP_ACT_LED',
-  identifier: LPUART0_RX;DEBUG_UART_RX;PROP_ACT_LED}
-- {pin_num: '43', pin_signal: PTC7/LLWU_P15/SPI0_PCS2/I2C1_SDA/LPUART0_TX/TPM2_CH1, label: 'LPUART0_TX/J10[1]/U5[24]/U6[1]/UART0_TX_TGTMCU/M3_LED/M3_LED/M3_LED',
-  identifier: LPUART0_TX;DEBUG_UART_TX;M3_LED}
-- {pin_num: '30', pin_signal: EXTAL, label: 'Y1[3]/EXTAL_32M', identifier: EXTAL}
-- {pin_num: '31', pin_signal: XTAL, label: 'Y1[1]/XTAL_32M', identifier: XTAL}
-- {pin_num: '21', pin_signal: EXTAL32K/PTB16/LPUART1_RX/I2C1_SCL/TPM2_CH0, label: 'Y2[1]/EXTAL32K', identifier: EXTAL32K}
-- {pin_num: '22', pin_signal: XTAL32K/PTB17/LPUART1_TX/I2C1_SDA/TPM2_CH1, label: 'Y2[2]/XTAL32K', identifier: XTAL32K}
-- {pin_num: '16', pin_signal: PTB0/LLWU_P8/RF_RFOSC_EN/I2C0_SCL/CMP0_OUT/TPM0_CH1/CLKOUT/CAN0_TX, label: 'J2[10]/U11[4]/D15/I2C_SCL_FXOS8700CQ/M1_LED/M1_LED/M1_LED',
-  identifier: ACCEL_SCL;M1_LED;VDD_5V_EN}
-- {pin_num: '17', pin_signal: ADC0_SE1/CMP0_IN5/PTB1/RF_PRIORITY/DTM_RX/I2C0_SDA/LPTMR0_ALT1/TPM0_CH2/CMT_IRO/CAN0_RX, label: 'J2[9]/U11[6]/D14/I2C_SDA_FXOS8700CQ/VDD_5V_MCU/VDD_5V_MCU/ETSB_MCU/ADC1',
-  identifier: ACCEL_SDA;VDD_5V_MCU;ETSB_MCU;BATT_I}
-- {pin_num: '46', pin_signal: PTC17/LLWU_P1/RF_EXT_OSC_EN/SPI0_SOUT/I2C1_SCL/LPUART0_RX/DTM_RX/LPUART1_RX, label: SPI0_MOSI, identifier: FLASH_SI;VDD_5V_EN;TURTLE_LED;SPI0_MOSI}
-- {pin_num: '45', pin_signal: PTC16/LLWU_P0/RF_STATUS/SPI0_SCK/I2C0_SDA/LPUART0_RTS_b/TPM0_CH3/LPUART1_RTS_b, label: SPI0_CLK, identifier: FLASH_SCK;VDD_5V_EN_PULL;M2_LED;SPI0_CLK}
-- {pin_num: '48', pin_signal: PTC19/LLWU_P3/RF_EARLY_WARNING/SPI0_PCS0/I2C0_SCL/LPUART0_CTS_b/LPUART1_CTS_b, label: 'J1[3]/U3[4]/D2/CS/PWR_LATCH/PWR_LATCH/PROP_ACT_SW',
-  identifier: FLASH_CS;PWR_LATCH;PROP_ACT_SW;BTN}
-- {pin_num: '47', pin_signal: PTC18/LLWU_P2/SPI0_SIN/I2C1_SDA/LPUART0_TX/DTM_TX/LPUART1_TX, label: SPI0_MISO, identifier: FLASH_SO;PWR_GOOD;ELEC_FAULT_LED;SPI0_MISO}
-- {pin_num: '25', pin_signal: ADC0_DM0/CMP0_IN1, label: 'J4[6]/A5/ADC0_DM0/CMP0_IN1/THER_B', identifier: ADC0_DM_THER}
-- {pin_num: '24', pin_signal: ADC0_DP0/CMP0_IN0, label: 'J4[1]/A0/ADC0_DP0/CMP0_IN0/THER_A/ETSA_MCU/ADC0/ETSA_MCU/ADC0/ETSA_MCU/ADC0', identifier: ADC0_DP_THER;ETSA_MCU}
-- {pin_num: '40', pin_signal: PTC4/LLWU_P12/RF_ACTIVE/ANT_A/EXTRG_IN/LPUART0_CTS_b/TPM1_CH0/I2C0_SCL/SPI1_PCS0/CAN0_RX, label: SPI1_CS, identifier: CAN_RX;SPI0_CS;SPI1_CS}
-- {pin_num: '39', pin_signal: PTC3/LLWU_P11/RX_SWITCH/I2C1_SDA/LPUART0_TX/TPM0_CH1/DTM_TX/SPI1_SIN/CAN0_TX, label: SPI1_MISO, identifier: CAN_TX;SPI0_MISO;SPI1_MISO}
-- {pin_num: '5', pin_signal: PTA17/LLWU_P5/SPI1_SIN/LPUART1_RX/CAN0_TX/TPM_CLKIN1, label: 'LPUART1_RX/J1[5]/U10[1]/U12[4]/D4/LIN_RX_LS/CAN0_TX/CAN0_TX/CAN0_TX', identifier: LPUART1_RX;LIN_RX_LS;CAN0_TX}
-- {pin_num: '6', pin_signal: PTA18/LLWU_P6/SPI1_SCK/LPUART1_TX/CAN0_RX/TPM2_CH0, label: 'LPUART1_TX/J1[7]/U7[2]/U10[4]/D6/LIN_TX_LS/CAN0_RX/CAN0_RX/CAN0_RX', identifier: LPUART1_TX;LIN_TX_LS;CAN0_RX}
-- {pin_num: '41', pin_signal: PTC5/LLWU_P13/RF_NOT_ALLOWED/RF_PRIORITY/LPTMR0_ALT2/LPUART0_RTS_b/TPM1_CH1, label: 'J1[8]/U7[1]/U10[2]/D7/LIN_SLP/PROP_ACT_SW_LED/PROP_ACT_SW_LED/PROP_ACT_SW_LED',
-  identifier: LIN_SLP;PROP_ACT_SW_LED}
-- {pin_num: '1', pin_signal: PTA0/RF_ACTIVE/SPI0_PCS1/TPM1_CH0/SWD_DIO, label: SPI0_CS, identifier: SPI0_CS}
-- {pin_num: '2', pin_signal: PTA1/RF_STATUS/SPI1_PCS0/TPM1_CH1/SWD_CLK, label: 'J15[1]/SWD_CLK'}
-- {pin_num: '8', pin_signal: PSWITCH, label: 'J19[1]/J19[3]/J19[5]/PSWITCH'}
-- {pin_num: '3', pin_signal: PTA2/TPM0_CH3/RESET_b, label: 'J3[3]/J5[3]/J12[10]/RST_TGTMCU_b'}
-- {pin_num: '7', pin_signal: ADC0_SE5/PTA19/LLWU_P7/SPI1_PCS0/LPUART1_CTS_b/TPM2_CH1, label: 'J2[3]/U11[11]/D10/INT1_COMBO/PWR_WAKE_READ/PWR_WAKE_READ/MODE_SW', identifier: ACCEL_INT1;PWR_WAKE_READ;MODE_SW;BATT_T2}
-- {pin_num: '9', pin_signal: DCDC_CFG/VDCDC_IN, label: 'J19[4]/J20[4]/J20[6]/J26[2]/J27[2]/J30[1]/VDCDC_IN/SW4'}
-- {pin_num: '10', pin_signal: DCDC_LP, label: 'J20[5]/L3[1]/DCDC_LP'}
-- {pin_num: '12', pin_signal: DCDC_LN12, label: 'L3[2]/DCDC_LN'}
-- {pin_num: '11', pin_signal: DCDC_GND, label: GND}
-- {pin_num: '26', pin_signal: VREFL/VSSA, label: GND}
-- {pin_num: '13', pin_signal: VDD_1P8OUT, label: 'J27[1]/J29[1]/VDD_1P8'}
-- {pin_num: '15', pin_signal: VDD_1P5OUT_PMCIN, label: 'J31[1]/L5[1]/C66/VDD_RFF/VDD_1P45OUT_PMCIN'}
-- {pin_num: '19', pin_signal: ADC0_SE2/CMP0_IN4/PTB3/ERCLK32K/RF_ACTIVE/LPUART1_RTS_b/TPM0_CH1/CLKOUT/TPM1_CH1/RTC_CLKOUT/TPM2_CH1, label: 'LED/J4[4]/Q4[1]/A3/LED3/MTR_TMP0_MCU/ADC3/MTR_TMP0_MCU/ADC3/MTR_TMP0_MCU/ADC3',
-  identifier: LED;LED_COMMUNICATING;LED_COMM;LED3_RED;MTR_TMP0_MCU;BATT_T1}
-- {pin_num: '20', pin_signal: VDD_0, label: 'J29[2]/VDD_MCU'}
-- {pin_num: '44', pin_signal: VDD_1, label: 'J29[2]/VDD_MCU'}
-- {pin_num: '27', pin_signal: VREFH/VREF_OUT, label: C60}
-- {pin_num: '28', pin_signal: VDDA, label: 'L4[2]/C69/VDDA'}
-- {pin_num: '29', pin_signal: XTAL_OUT, label: 'J33[2]/XTAL_OUT'}
-- {pin_num: '32', pin_signal: VDD_RF3, label: 'J31[2]/VDD_RF'}
-- {pin_num: '33', pin_signal: ANT, label: 'J21[1]/L2[1]/RF_SMA/RF_50/RF_ANT'}
-- {pin_num: '34', pin_signal: GANT, label: GND}
-- {pin_num: '35', pin_signal: VDD_RF2, label: 'J31[2]/VDD_RF'}
-- {pin_num: '36', pin_signal: VDD_RF1, label: 'J31[2]/VDD_RF'}
+- {pin_num: '37', pin_signal: PTC1/RF_EARLY_WARNING/ANT_B/I2C0_SDA/LPUART0_RTS_b/TPM0_CH2/SPI1_SCK, label: LED_R, identifier: LED_R}
+- {pin_num: '4', pin_signal: PTA16/LLWU_P4/SPI1_SOUT/LPUART1_RTS_b/TPM0_CH0, label: LED_G, identifier: LED_G}
+- {pin_num: '18', pin_signal: ADC0_SE3/CMP0_IN3/PTB2/RF_NOT_ALLOWED/LLWU_P9/DTM_TX/TPM0_CH0/TPM1_CH0/TPM2_CH0, label: LED_B, identifier: LED_B}
+- {pin_num: '19', pin_signal: ADC0_SE2/CMP0_IN4/PTB3/ERCLK32K/RF_ACTIVE/LPUART1_RTS_b/TPM0_CH1/CLKOUT/TPM1_CH1/RTC_CLKOUT/TPM2_CH1, label: LED, identifier: LED}
+- {pin_num: '23', pin_signal: ADC0_SE4/CMP0_IN2/PTB18/LPUART1_CTS_b/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b, label: SW2, identifier: SW2}
+- {pin_num: '38', pin_signal: PTC2/LLWU_P10/TX_SWITCH/I2C1_SCL/LPUART0_RX/CMT_IRO/DTM_RX/SPI1_SOUT, label: SW3, identifier: SW3}
+- {pin_num: '42', pin_signal: PTC6/LLWU_P14/RF_RFOSC_EN/I2C1_SCL/LPUART0_RX/TPM2_CH0, label: LPUART0_RX, identifier: LPUART0_RX}
+- {pin_num: '43', pin_signal: PTC7/LLWU_P15/SPI0_PCS2/I2C1_SDA/LPUART0_TX/TPM2_CH1, label: LPUART0_TX, identifier: LPUART0_TX}
+- {pin_num: '6', pin_signal: PTA18/LLWU_P6/SPI1_SCK/LPUART1_TX/CAN0_RX/TPM2_CH0, label: LPUART1_TX, identifier: LPUART1_TX}
+- {pin_num: '5', pin_signal: PTA17/LLWU_P5/SPI1_SIN/LPUART1_RX/CAN0_TX/TPM_CLKIN1, label: LPUART1_RX, identifier: LPUART1_RX}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -89,12 +41,8 @@ pin_labels:
 void BOARD_InitBootPins(void)
 {
     BOARD_InitLPUART();
-    BOARD_InitPins();
-    BOARD_InitButtonsPins();
-    BOARD_InitLEDsPins();
-    BOARD_InitSPIPins();
-    BOARD_InitCANPins();
-    BOARD_InitADCPins();
+    BOARD_InitLEDs();
+    BOARD_InitButtons();
 }
 
 /* clang-format off */
@@ -121,10 +69,10 @@ void BOARD_InitLPUART(void)
     CLOCK_EnableClock(kCLOCK_PortC);
 
     /* PORTC6 (pin 42) is configured as LPUART0_RX */
-    PORT_SetPinMux(PORTC, 6U, kPORT_MuxAlt4);
+    PORT_SetPinMux(BOARD_INITLPUART_LPUART0_RX_PORT, BOARD_INITLPUART_LPUART0_RX_PIN, kPORT_MuxAlt4);
 
     /* PORTC7 (pin 43) is configured as LPUART0_TX */
-    PORT_SetPinMux(PORTC, 7U, kPORT_MuxAlt4);
+    PORT_SetPinMux(BOARD_INITLPUART_LPUART0_TX_PORT, BOARD_INITLPUART_LPUART0_TX_PIN, kPORT_MuxAlt4);
 
     SIM->SOPT5 = ((SIM->SOPT5 &
                    /* Mask bits to zero which are setting */
@@ -140,246 +88,141 @@ void BOARD_InitLPUART(void)
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPins:
-- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
-- pin_list: []
+BOARD_InitLEDs:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: '19', peripheral: GPIOB, signal: 'GPIO, 3', pin_signal: ADC0_SE2/CMP0_IN4/PTB3/ERCLK32K/RF_ACTIVE/LPUART1_RTS_b/TPM0_CH1/CLKOUT/TPM1_CH1/RTC_CLKOUT/TPM2_CH1,
+    direction: OUTPUT}
+  - {pin_num: '37', peripheral: GPIOC, signal: 'GPIO, 1', pin_signal: PTC1/RF_EARLY_WARNING/ANT_B/I2C0_SDA/LPUART0_RTS_b/TPM0_CH2/SPI1_SCK, direction: OUTPUT}
+  - {pin_num: '18', peripheral: GPIOB, signal: 'GPIO, 2', pin_signal: ADC0_SE3/CMP0_IN3/PTB2/RF_NOT_ALLOWED/LLWU_P9/DTM_TX/TPM0_CH0/TPM1_CH0/TPM2_CH0, direction: OUTPUT}
+  - {pin_num: '4', peripheral: GPIOA, signal: 'GPIO, 16', pin_signal: PTA16/LLWU_P4/SPI1_SOUT/LPUART1_RTS_b/TPM0_CH0, direction: OUTPUT}
+  - {pin_num: '39', peripheral: CAN0, signal: TX, pin_signal: PTC3/LLWU_P11/RX_SWITCH/I2C1_SDA/LPUART0_TX/TPM0_CH1/DTM_TX/SPI1_SIN/CAN0_TX}
+  - {pin_num: '40', peripheral: CAN0, signal: RX, pin_signal: PTC4/LLWU_P12/RF_ACTIVE/ANT_A/EXTRG_IN/LPUART0_CTS_b/TPM1_CH0/I2C0_SCL/SPI1_PCS0/CAN0_RX}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitPins
+ * Function Name : BOARD_InitLEDs
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitPins(void)
+void BOARD_InitLEDs(void)
 {
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+    /* Port C Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+
+    gpio_pin_config_t LED_G_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTA16 (pin 4)  */
+    GPIO_PinInit(BOARD_INITLEDS_LED_G_GPIO, BOARD_INITLEDS_LED_G_PIN, &LED_G_config);
+
+    gpio_pin_config_t LED_B_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTB2 (pin 18)  */
+    GPIO_PinInit(BOARD_INITLEDS_LED_B_GPIO, BOARD_INITLEDS_LED_B_PIN, &LED_B_config);
+
+    gpio_pin_config_t LED_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTB3 (pin 19)  */
+    GPIO_PinInit(BOARD_INITLEDS_LED_GPIO, BOARD_INITLEDS_LED_PIN, &LED_config);
+
+    gpio_pin_config_t LED_R_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTC1 (pin 37)  */
+    GPIO_PinInit(BOARD_INITLEDS_LED_R_GPIO, BOARD_INITLEDS_LED_R_PIN, &LED_R_config);
+
+    /* PORTA16 (pin 4) is configured as PTA16 */
+    PORT_SetPinMux(BOARD_INITLEDS_LED_G_PORT, BOARD_INITLEDS_LED_G_PIN, kPORT_MuxAsGpio);
+
+    /* PORTB2 (pin 18) is configured as PTB2 */
+    PORT_SetPinMux(BOARD_INITLEDS_LED_B_PORT, BOARD_INITLEDS_LED_B_PIN, kPORT_MuxAsGpio);
+
+    /* PORTB3 (pin 19) is configured as PTB3 */
+    PORT_SetPinMux(BOARD_INITLEDS_LED_PORT, BOARD_INITLEDS_LED_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC1 (pin 37) is configured as PTC1 */
+    PORT_SetPinMux(BOARD_INITLEDS_LED_R_PORT, BOARD_INITLEDS_LED_R_PIN, kPORT_MuxAsGpio);
+
+    /* PORTC3 (pin 39) is configured as CAN0_TX */
+    PORT_SetPinMux(PORTC, 3U, kPORT_MuxAlt9);
+
+    /* PORTC4 (pin 40) is configured as CAN0_RX */
+    PORT_SetPinMux(PORTC, 4U, kPORT_MuxAlt9);
 }
 
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitButtonsPins:
-- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
+BOARD_InitButtons:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '48', peripheral: GPIOC, signal: 'GPIO, 19', pin_signal: PTC19/LLWU_P3/RF_EARLY_WARNING/SPI0_PCS0/I2C0_SCL/LPUART0_CTS_b/LPUART1_CTS_b, identifier: BTN,
-    direction: INPUT, pull_enable: enable}
+  - {pin_num: '23', peripheral: GPIOB, signal: 'GPIO, 18', pin_signal: ADC0_SE4/CMP0_IN2/PTB18/LPUART1_CTS_b/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b, direction: INPUT,
+    pull_enable: enable}
+  - {pin_num: '38', peripheral: GPIOC, signal: 'GPIO, 2', pin_signal: PTC2/LLWU_P10/TX_SWITCH/I2C1_SCL/LPUART0_RX/CMT_IRO/DTM_RX/SPI1_SOUT, direction: INPUT, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitButtonsPins
+ * Function Name : BOARD_InitButtons
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitButtonsPins(void)
+void BOARD_InitButtons(void)
 {
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
     /* Port C Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortC);
 
-    gpio_pin_config_t BTN_config = {
+    gpio_pin_config_t SW2_config = {
         .pinDirection = kGPIO_DigitalInput,
         .outputLogic = 0U
     };
-    /* Initialize GPIO functionality on pin PTC19 (pin 48)  */
-    GPIO_PinInit(BOARD_BTN_GPIO, BOARD_BTN_PIN, &BTN_config);
+    /* Initialize GPIO functionality on pin PTB18 (pin 23)  */
+    GPIO_PinInit(BOARD_INITBUTTONS_SW2_GPIO, BOARD_INITBUTTONS_SW2_PIN, &SW2_config);
 
-    /* PORTC19 (pin 48) is configured as PTC19 */
-    PORT_SetPinMux(BOARD_BTN_PORT, BOARD_BTN_PIN, kPORT_MuxAsGpio);
-
-    PORTC->PCR[19] = ((PORTC->PCR[19] &
-                       /* Mask bits to zero which are setting */
-                       (~(PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
-
-                      /* Pull Enable: Internal pullup or pulldown resistor is enabled on the corresponding pin. */
-                      | (uint32_t)(PORT_PCR_PE_MASK));
-}
-
-/* clang-format off */
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitLEDsPins:
-- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: '16', peripheral: GPIOB, signal: 'GPIO, 0', pin_signal: PTB0/LLWU_P8/RF_RFOSC_EN/I2C0_SCL/CMP0_OUT/TPM0_CH1/CLKOUT/CAN0_TX, identifier: VDD_5V_EN, direction: OUTPUT,
-    gpio_init_state: 'true'}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-/* clang-format on */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitLEDsPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitLEDsPins(void)
-{
-    /* Port B Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortB);
-
-    gpio_pin_config_t VDD_5V_EN_config = {
-        .pinDirection = kGPIO_DigitalOutput,
-        .outputLogic = 1U
+    gpio_pin_config_t SW3_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
     };
-    /* Initialize GPIO functionality on pin PTB0 (pin 16)  */
-    GPIO_PinInit(BOARD_VDD_5V_EN_GPIO, BOARD_VDD_5V_EN_PIN, &VDD_5V_EN_config);
+    /* Initialize GPIO functionality on pin PTC2 (pin 38)  */
+    GPIO_PinInit(BOARD_INITBUTTONS_SW3_GPIO, BOARD_INITBUTTONS_SW3_PIN, &SW3_config);
 
-    /* PORTB0 (pin 16) is configured as PTB0 */
-    PORT_SetPinMux(BOARD_VDD_5V_EN_PORT, BOARD_VDD_5V_EN_PIN, kPORT_MuxAsGpio);
-}
+    /* PORTB18 (pin 23) is configured as PTB18 */
+    PORT_SetPinMux(BOARD_INITBUTTONS_SW2_PORT, BOARD_INITBUTTONS_SW2_PIN, kPORT_MuxAsGpio);
 
-/* clang-format off */
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitSPIPins:
-- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: '37', peripheral: SPI1, signal: SCK, pin_signal: PTC1/RF_EARLY_WARNING/ANT_B/I2C0_SDA/LPUART0_RTS_b/TPM0_CH2/SPI1_SCK, identifier: SPI1_CLK}
-  - {pin_num: '38', peripheral: SPI1, signal: SOUT, pin_signal: PTC2/LLWU_P10/TX_SWITCH/I2C1_SCL/LPUART0_RX/CMT_IRO/DTM_RX/SPI1_SOUT, identifier: SPI1_MOSI}
-  - {pin_num: '39', peripheral: SPI1, signal: SIN, pin_signal: PTC3/LLWU_P11/RX_SWITCH/I2C1_SDA/LPUART0_TX/TPM0_CH1/DTM_TX/SPI1_SIN/CAN0_TX, identifier: SPI1_MISO}
-  - {pin_num: '40', peripheral: SPI1, signal: PCS0_SS, pin_signal: PTC4/LLWU_P12/RF_ACTIVE/ANT_A/EXTRG_IN/LPUART0_CTS_b/TPM1_CH0/I2C0_SCL/SPI1_PCS0/CAN0_RX, identifier: SPI1_CS,
-    direction: OUTPUT}
-  - {pin_num: '45', peripheral: SPI0, signal: SCK, pin_signal: PTC16/LLWU_P0/RF_STATUS/SPI0_SCK/I2C0_SDA/LPUART0_RTS_b/TPM0_CH3/LPUART1_RTS_b, identifier: SPI0_CLK}
-  - {pin_num: '46', peripheral: SPI0, signal: SOUT, pin_signal: PTC17/LLWU_P1/RF_EXT_OSC_EN/SPI0_SOUT/I2C1_SCL/LPUART0_RX/DTM_RX/LPUART1_RX, identifier: SPI0_MOSI}
-  - {pin_num: '47', peripheral: SPI0, signal: SIN, pin_signal: PTC18/LLWU_P2/SPI0_SIN/I2C1_SDA/LPUART0_TX/DTM_TX/LPUART1_TX, identifier: SPI0_MISO}
-  - {pin_num: '1', peripheral: SPI0, signal: PCS1, pin_signal: PTA0/RF_ACTIVE/SPI0_PCS1/TPM1_CH0/SWD_DIO}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-/* clang-format on */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitSPIPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitSPIPins(void)
-{
-    /* Port A Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortA);
-    /* Port C Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortC);
-
-    /* PORTA0 (pin 1) is configured as SPI0_PCS1 */
-    PORT_SetPinMux(BOARD_SPI0_CS_PORT, BOARD_SPI0_CS_PIN, kPORT_MuxAlt2);
-
-    /* PORTC1 (pin 37) is configured as SPI1_SCK */
-    PORT_SetPinMux(BOARD_SPI1_CLK_PORT, BOARD_SPI1_CLK_PIN, kPORT_MuxAlt8);
-
-    /* PORTC16 (pin 45) is configured as SPI0_SCK */
-    PORT_SetPinMux(BOARD_SPI0_CLK_PORT, BOARD_SPI0_CLK_PIN, kPORT_MuxAlt2);
-
-    /* PORTC17 (pin 46) is configured as SPI0_SOUT */
-    PORT_SetPinMux(BOARD_SPI0_MOSI_PORT, BOARD_SPI0_MOSI_PIN, kPORT_MuxAlt2);
-
-    /* PORTC18 (pin 47) is configured as SPI0_SIN */
-    PORT_SetPinMux(BOARD_SPI0_MISO_PORT, BOARD_SPI0_MISO_PIN, kPORT_MuxAlt2);
-
-    /* PORTC2 (pin 38) is configured as SPI1_SOUT */
-    PORT_SetPinMux(BOARD_SPI1_MOSI_PORT, BOARD_SPI1_MOSI_PIN, kPORT_MuxAlt8);
-
-    /* PORTC3 (pin 39) is configured as SPI1_SIN */
-    PORT_SetPinMux(BOARD_SPI1_MISO_PORT, BOARD_SPI1_MISO_PIN, kPORT_MuxAlt8);
-
-    /* PORTC4 (pin 40) is configured as SPI1_PCS0 */
-    PORT_SetPinMux(BOARD_SPI1_CS_PORT, BOARD_SPI1_CS_PIN, kPORT_MuxAlt8);
-}
-
-/* clang-format off */
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitCANPins:
-- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: '5', peripheral: CAN0, signal: TX, pin_signal: PTA17/LLWU_P5/SPI1_SIN/LPUART1_RX/CAN0_TX/TPM_CLKIN1, pull_select: down, pull_enable: disable}
-  - {pin_num: '6', peripheral: CAN0, signal: RX, pin_signal: PTA18/LLWU_P6/SPI1_SCK/LPUART1_TX/CAN0_RX/TPM2_CH0, pull_enable: enable}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-/* clang-format on */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitCANPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitCANPins(void)
-{
-    /* Port A Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortA);
-
-    /* PORTA17 (pin 5) is configured as CAN0_TX */
-    PORT_SetPinMux(PORTA, 17U, kPORT_MuxAlt4);
-
-    PORTA->PCR[17] = ((PORTA->PCR[17] &
-                       /* Mask bits to zero which are setting */
-                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
-
-                      /* Pull Select: Internal pulldown resistor is enabled on the corresponding pin, if the
-                       * corresponding PE field is set. */
-                      | PORT_PCR_PS(kPORT_PullDown)
-
-                      /* Pull Enable: Internal pull resistor is not enabled on the corresponding pin. */
-                      | PORT_PCR_PE(kPORT_PullDisable));
-
-    /* PORTA18 (pin 6) is configured as CAN0_RX */
-    PORT_SetPinMux(PORTA, 18U, kPORT_MuxAlt4);
-
-    PORTA->PCR[18] = ((PORTA->PCR[18] &
+    PORTB->PCR[18] = ((PORTB->PCR[18] &
                        /* Mask bits to zero which are setting */
                        (~(PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
 
                       /* Pull Enable: Internal pullup or pulldown resistor is enabled on the corresponding pin. */
                       | (uint32_t)(PORT_PCR_PE_MASK));
-}
 
-/* clang-format off */
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitADCPins:
-- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: '7', peripheral: ADC0, signal: 'SE, 5', pin_signal: ADC0_SE5/PTA19/LLWU_P7/SPI1_PCS0/LPUART1_CTS_b/TPM2_CH1, identifier: BATT_T2}
-  - {pin_num: '18', peripheral: ADC0, signal: 'SE, 3', pin_signal: ADC0_SE3/CMP0_IN3/PTB2/RF_NOT_ALLOWED/LLWU_P9/DTM_TX/TPM0_CH0/TPM1_CH0/TPM2_CH0, identifier: BATT_V}
-  - {pin_num: '19', peripheral: ADC0, signal: 'SE, 2', pin_signal: ADC0_SE2/CMP0_IN4/PTB3/ERCLK32K/RF_ACTIVE/LPUART1_RTS_b/TPM0_CH1/CLKOUT/TPM1_CH1/RTC_CLKOUT/TPM2_CH1,
-    identifier: BATT_T1}
-  - {pin_num: '17', peripheral: ADC0, signal: 'SE, 1', pin_signal: ADC0_SE1/CMP0_IN5/PTB1/RF_PRIORITY/DTM_RX/I2C0_SDA/LPTMR0_ALT1/TPM0_CH2/CMT_IRO/CAN0_RX, identifier: BATT_I}
-  - {pin_num: '23', peripheral: ADC0, signal: 'SE, 4', pin_signal: ADC0_SE4/CMP0_IN2/PTB18/LPUART1_CTS_b/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b, identifier: VSENSE}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-/* clang-format on */
+    /* PORTC2 (pin 38) is configured as PTC2 */
+    PORT_SetPinMux(BOARD_INITBUTTONS_SW3_PORT, BOARD_INITBUTTONS_SW3_PIN, kPORT_MuxAsGpio);
 
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitADCPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitADCPins(void)
-{
-    /* Port A Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortA);
-    /* Port B Clock Gate Control: Clock enabled */
-    CLOCK_EnableClock(kCLOCK_PortB);
+    PORTC->PCR[2] = ((PORTC->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
 
-    /* PORTA19 (pin 7) is configured as ADC0_SE5 */
-    PORT_SetPinMux(BOARD_BATT_T2_PORT, BOARD_BATT_T2_PIN, kPORT_PinDisabledOrAnalog);
-
-    /* PORTB1 (pin 17) is configured as ADC0_SE1 */
-    PORT_SetPinMux(BOARD_BATT_I_PORT, BOARD_BATT_I_PIN, kPORT_PinDisabledOrAnalog);
-
-    /* PORTB18 (pin 23) is configured as ADC0_SE4 */
-    PORT_SetPinMux(BOARD_VSENSE_PORT, BOARD_VSENSE_PIN, kPORT_PinDisabledOrAnalog);
-
-    /* PORTB2 (pin 18) is configured as ADC0_SE3 */
-    PORT_SetPinMux(BOARD_BATT_V_PORT, BOARD_BATT_V_PIN, kPORT_PinDisabledOrAnalog);
-
-    /* PORTB3 (pin 19) is configured as ADC0_SE2 */
-    PORT_SetPinMux(BOARD_BATT_T1_PORT, BOARD_BATT_T1_PIN, kPORT_PinDisabledOrAnalog);
+                     /* Pull Enable: Internal pullup or pulldown resistor is enabled on the corresponding pin. */
+                     | (uint32_t)(PORT_PCR_PE_MASK));
 }
 /***********************************************************************************************************************
  * EOF

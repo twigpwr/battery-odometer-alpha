@@ -81,7 +81,7 @@
  * VALID RANGE: user defined
  */
 #ifndef gTmrApplicationTimers_c
-#define gTmrApplicationTimers_c 4U
+#define gTmrApplicationTimers_c 6U
 #endif
 
 /*

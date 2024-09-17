@@ -49,6 +49,23 @@
 
 /*! *********************************************************************************
 *************************************************************************************
+* Private type definitions
+*************************************************************************************
+********************************************************************************** */
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_CONNECTIVITY_CORE
+/*
+ * Structure holding the assembly code that is executed from RAM. See
+ * mWaitInRamFunctionCode below for the number of lines of code and number of
+ * registers.
+*/
+typedef struct waitInRamStruct_tag{
+    uint16_t aInstructions[20]; /*< number of lines of code */
+    uint32_t aDict[3];          /*< number of register values needed */
+} waitInRamStruct_t;
+#endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_CONNECTIVITY_CORE */
+
+/*! *********************************************************************************
+*************************************************************************************
 * Private prototypes
 *************************************************************************************
 ********************************************************************************** */
@@ -61,6 +78,11 @@ static void NV_Flash_WaitForCSEndAndDisableInterrupts(void);
 #ifdef CPU_QN908X
 static uint32_t SwFlashVerifyErase (uint32_t start, uint32_t lengthInBytes);
 #endif
+
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE
+static void NV_WaitForBlackboxRam();
+static void NV_BlackboxExitRam();
+#endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -83,6 +105,64 @@ static osaSemaphoreId_t       mFlashAdapterSemaphoreId;
 #endif
 static volatile uint8_t mFA_CSFlag = 0U;
 static volatile uint8_t mFA_SemWaitCount = 0U;
+
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_CONNECTIVITY_CORE
+/*
+    Dissasembly code was generated with IAR 8.32.1 for ARMv6. Make sure that the values
+    CORE_B_IN_RAM, CORE_B_OUT_OF_RAM and THREAD_MU_CHANNEL are the ones defined in C.
+    C code:
+    asm ("CPSID I");
+    MU_SendMsg(MUB, THREAD_MU_CHANNEL, CORE_B_IN_RAM);
+    while (!(MUB->SR & (kMU_Tx0EmptyFlag >> THREAD_MU_CHANNEL)));
+    MUB->TR[THREAD_MU_CHANNEL] = CORE_B_IN_RAM;
+
+    while (MU_ReceiveMsg(MUB, THREAD_MU_CHANNEL) != CORE_B_OUT_OF_RAM);
+     Wait TX register to be empty.
+    while (!(MUB->SR & (kMU_Tx0EmptyFlag >> THREAD_MU_CHANNEL)));
+    MUB->TR[THREAD_MU_CHANNEL] = CORE_B_IN_RAM;
+    do
+    {
+         Wait RX register to be full.
+        while (!(MUB->SR & (kMU_Rx0FullFlag >> THREAD_MU_CHANNEL)));
+    } while (MUB->RR[THREAD_MU_CHANNEL] != CORE_B_OUT_OF_RAM);
+
+    asm ("CPSIE I");
+*/
+static waitInRamStruct_t mWaitInRamFunctionCode = {
+  // code
+  {
+    0xB500,     // PUSH         {LR}
+    0xB672,     // CPSID        I
+    0x4808,     // LDR.N        R0, [PC, #32]
+    0x6801,     // LDR          R1, [R0]
+    0x0289,     // LSLS         R1, R1, #10
+    0xD5FB,     // BPL.N        3 instruction back
+
+    0x2101,     // MOVS         R1, 1                   ; CORE_B_IN_RAM = 1
+    0x4a07,     // LDR.N        R2, [PC, #]
+    0x6011,     // STR          R1, [R2]
+    0x6801,     // LDR          R1, [R0]
+    0x0189,     // LSL          R1, R1, #6
+    0xd5fc,     // BPL.N        2 instructions back
+    0x4905,     // LDR.N        R1, [PC, #]
+    0x6809,     // LDR          R1, [R1]
+    0x2902,     // CMP          R1, #2                  ; CORE_B_OUT_OF_RAM = 2
+    0xd1f8,     // BNE.N        6 instructions back
+
+    0xb662,     // CPSIE        I
+    0xbd00,     // POP          {PC}
+    0x0000,     // NOP          ; align
+    0x0000,     // NOP          ; align
+  },
+  // register addresses
+  {
+    0x41024060,  // MU_SR
+    0x41024028,  // MU_TR[2]                            ; THREAD_MU_CHANNEL = 2
+    0x41024048,  // MU_RR[2]                            ; THREAD_MU_CHANNEL = 2
+  }
+};
+static void (*mpWaitInRamFunction)() = (void (*)(void))((uint32_t)&mWaitInRamFunctionCode + 1);
+#endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_CONNECTIVITY_CORE */
 
 /*****************************************************************************
  *****************************************************************************
@@ -164,6 +244,10 @@ static uint32_t NV_FlashProgramAdaptation(uint32_t dest, uint32_t size, uint8_t*
   #if gNvDisableIntCmdSeq_c
       NV_Flash_WaitForCSEndAndDisableInterrupts();
   #endif
+  #if gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE
+      NV_BlackboxEnterRam();
+      NV_WaitForBlackboxRam();
+  #endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE */
       pFlashEndadd = FSL_FEATURE_FLASH_PFLASH_START_ADDRESS + FSL_FEATURE_FLASH_PFLASH_BLOCK_COUNT*FSL_FEATURE_FLASH_PFLASH_BLOCK_SIZE;
       if (dest < pFlashEndadd)
       {
@@ -180,6 +264,9 @@ static uint32_t NV_FlashProgramAdaptation(uint32_t dest, uint32_t size, uint8_t*
           /*MISRA rule 15.7*/
       }
   #endif/* FSL_FEATURE_FLASH_HAS_FLEX_NVM */
+  #if gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE
+      NV_BlackboxExitRam();
+  #endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE */
   #if gNvDisableIntCmdSeq_c
       OSA_InterruptEnable();
   #endif
@@ -289,6 +376,23 @@ uint32_t SwFlashVerifyErase (uint32_t start, uint32_t lengthInBytes)
 }
 #endif
 
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE
+/*! *********************************************************************************
+ * \brief  Instructs other core to jump in a RAM loop with interrupts disabled
+********************************************************************************** */
+static void NV_WaitForBlackboxRam()
+{
+    while (MU_ReceiveMsg(MUA, THREAD_MU_CHANNEL) != CORE_B_IN_RAM);
+}
+
+/*! *********************************************************************************
+ * \brief  Instructs other core to exit the RAM loop and re-enable interrupts
+********************************************************************************** */
+static void NV_BlackboxExitRam()
+{
+    MU_SendMsg(MUA, THREAD_MU_CHANNEL, CORE_B_OUT_OF_RAM);
+}
+#endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -310,6 +414,9 @@ void NV_Init(void)
         FLASH_GetDefaultConfig(&gFlashConfig);
         gFlashConfig.blockBase = 0x0U;
 #endif /* CPU_QN908X */
+#ifdef gNVM_MULTICORE_SUPPORT_d
+        FLASH_SetProperty(&gFlashConfig, kFLASH_PropertyFlashMemoryIndex, 1);
+#endif
         /* Init Flash */
         (void)FLASH_Init(&gFlashConfig);
 
@@ -415,6 +522,10 @@ uint32_t NV_FlashVerifyErase ( uint32_t start, uint32_t lengthInBytes
 #if gNvDisableIntCmdSeq_c
     NV_Flash_WaitForCSEndAndDisableInterrupts();
 #endif
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE
+    NV_BlackboxEnterRam();
+    NV_WaitForBlackboxRam();
+#endif /* MULTICORE_APPLICATION_CORE */
 #ifdef CPU_QN908X
     status = SwFlashVerifyErase (start, lengthInBytes);
 #else
@@ -435,6 +546,9 @@ uint32_t NV_FlashVerifyErase ( uint32_t start, uint32_t lengthInBytes
     }
 #endif/* FSL_FEATURE_FLASH_HAS_FLEX_NVM */
 #endif
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE
+    NV_BlackboxExitRam();
+#endif /* MULTICORE_APPLICATION_CORE */
 #if gNvDisableIntCmdSeq_c
     OSA_InterruptEnable();
 #endif
@@ -554,6 +668,10 @@ uint32_t NV_FlashEraseSector(uint32_t dest, uint32_t size)
 #if gNvDisableIntCmdSeq_c
     NV_Flash_WaitForCSEndAndDisableInterrupts();
 #endif
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE
+    NV_BlackboxEnterRam();
+    NV_WaitForBlackboxRam();
+#endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE */
 #ifdef CPU_QN908X
     status_flags = FLASH_GetStatusFlags();
     if(status_flags & FLASH_INT_STAT_AHBL_INT_MASK)
@@ -583,6 +701,9 @@ uint32_t NV_FlashEraseSector(uint32_t dest, uint32_t size)
     }
 #endif/* FSL_FEATURE_FLASH_HAS_FLEX_NVM */
 #endif
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE
+    NV_BlackboxExitRam();
+#endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_APPLICATION_CORE */
 #if gNvDisableIntCmdSeq_c
     OSA_InterruptEnable();
 #endif
@@ -600,28 +721,28 @@ uint32_t NV_FlashEraseSector(uint32_t dest, uint32_t size)
 ********************************************************************************** */
 uint32_t NV_ReadHWParameters(hardwareParameters_t *pHwParams)
 {
-//    hardwareParameters_t* pLocalParams = (hardwareParameters_t*)(uint32_t)&FREESCALE_PROD_DATA_BASE_ADDR[0];
-//    uint32_t status = 0;
-//
-//    assert(FREESCALE_PROD_DATA_BASE_ADDR);
-//    assert(pHwParams);
-//
-//    if( FLib_MemCmp(FREESCALE_PROD_DATA_BASE_ADDR, pHwParams, sizeof(hardwareParameters_t)) )
-//    {
-//        /* pHwParams already copied from FREESCALE_PROD_DATA_BASE_ADDR , nothing to do */
-//    }
-//    else if(FLib_MemCmp(FREESCALE_PROD_DATA_BASE_ADDR, (const void*)mProdDataIdentifier, sizeof(mProdDataIdentifier)) &&
-//       (NV_VerifyCrcOverHWParameters(pLocalParams) != 0U))
-//    {
-//        FLib_MemCpy(pHwParams, FREESCALE_PROD_DATA_BASE_ADDR, sizeof(hardwareParameters_t));
-//    }
-//    else
-//    {
-//        FLib_MemSet(pHwParams, 0xFF, sizeof(hardwareParameters_t));
-//        status = 1;
-//    }
+    hardwareParameters_t* pLocalParams = (hardwareParameters_t*)(uint32_t)&FREESCALE_PROD_DATA_BASE_ADDR[0];
+    uint32_t status = 0;
 
-    return 0;//status;
+    assert(FREESCALE_PROD_DATA_BASE_ADDR);
+    assert(pHwParams);
+
+    if( FLib_MemCmp(FREESCALE_PROD_DATA_BASE_ADDR, pHwParams, sizeof(hardwareParameters_t)) )
+    {
+        /* pHwParams already copied from FREESCALE_PROD_DATA_BASE_ADDR , nothing to do */
+    }
+    else if(FLib_MemCmp(FREESCALE_PROD_DATA_BASE_ADDR, (const void*)mProdDataIdentifier, sizeof(mProdDataIdentifier)) &&
+       (NV_VerifyCrcOverHWParameters(pLocalParams) != 0U))
+    {
+        FLib_MemCpy(pHwParams, FREESCALE_PROD_DATA_BASE_ADDR, sizeof(hardwareParameters_t));
+    }
+    else
+    {
+        FLib_MemSet(pHwParams, 0xFF, sizeof(hardwareParameters_t));
+        status = 1;
+    }
+
+    return status;
 }
 
 /*! *********************************************************************************
@@ -635,31 +756,41 @@ uint32_t NV_ReadHWParameters(hardwareParameters_t *pHwParams)
 uint32_t NV_WriteHWParameters(hardwareParameters_t *pHwParams)
 {
     uint32_t status = 0;
-//    assert(pHwParams);
-//
-//    assert(FREESCALE_PROD_DATA_BASE_ADDR);
-//
-//    NV_Init();
-//
-//    if(!FLib_MemCmp(pHwParams, (void*)FREESCALE_PROD_DATA_BASE_ADDR, sizeof(hardwareParameters_t)))
-//    {
-//        pHwParams->hardwareParamsCrc = NV_ComputeCrcOverHWParameters(pHwParams);
-//        FLib_MemCpy(pHwParams->identificationWord, (const void*)mProdDataIdentifier, sizeof(mProdDataIdentifier));
-//
-//#if defined(FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE)
-//        status = NV_FlashEraseSector((uint32_t)FREESCALE_PROD_DATA_BASE_ADDR, FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE);
-//#elif defined(FSL_FEATURE_FLASH_PAGE_SIZE_BYTES)
-//        status = NV_FlashEraseSector((uint32_t)FREESCALE_PROD_DATA_BASE_ADDR, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES);
-//#endif
-//
-//        if( 0U == status )
-//        {
-//            status = NV_FlashProgramUnaligned((uint32_t)FREESCALE_PROD_DATA_BASE_ADDR,
-//                                              sizeof(hardwareParameters_t),
-//                                              (uint8_t*)pHwParams);
-//        }
-//    }
+    assert(pHwParams);
+
+    assert(FREESCALE_PROD_DATA_BASE_ADDR);
+
+    NV_Init();
+
+    if(!FLib_MemCmp(pHwParams, (void*)FREESCALE_PROD_DATA_BASE_ADDR, sizeof(hardwareParameters_t)))
+    {
+        pHwParams->hardwareParamsCrc = NV_ComputeCrcOverHWParameters(pHwParams);
+        FLib_MemCpy(pHwParams->identificationWord, (const void*)mProdDataIdentifier, sizeof(mProdDataIdentifier));
+
+#if defined(FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE)
+        status = NV_FlashEraseSector((uint32_t)FREESCALE_PROD_DATA_BASE_ADDR, FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE);
+#elif defined(FSL_FEATURE_FLASH_PAGE_SIZE_BYTES)
+        status = NV_FlashEraseSector((uint32_t)FREESCALE_PROD_DATA_BASE_ADDR, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES);
+#endif
+
+        if( 0U == status )
+        {
+            status = NV_FlashProgramUnaligned((uint32_t)FREESCALE_PROD_DATA_BASE_ADDR,
+                                              sizeof(hardwareParameters_t),
+                                              (uint8_t*)pHwParams);
+        }
+    }
     return status;
 }
+
+#if gNvPauseOtherCoreInRAM_c && MULTICORE_CONNECTIVITY_CORE
+/*! *********************************************************************************
+ * \brief  Enter a loop with interrupts disabled, executed from RAM
+********************************************************************************** */
+void NV_BlackboxEnterRam()
+{
+    mpWaitInRamFunction();
+}
+#endif /* gNvPauseOtherCoreInRAM_c && MULTICORE_CONNECTIVITY_CORE */
 
 #endif

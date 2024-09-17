@@ -16,6 +16,7 @@
 ************************************************************************************/
 #include "MWS.h"
 #include "fsl_os_abstraction.h"
+#include "GPIO_Adapter.h"
 #include "fsl_common.h"
 
 #if gMWS_UseCoexistence_d
