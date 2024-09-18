@@ -394,11 +394,7 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 
 static void OdoMeasurementTimerCallback(void * pParam)
 {
-    (void)Odo_RecordBatteryV(&odometerService);
-    (void)Odo_RecordBatteryI(&odometerService);
-    (void)Odo_RecordTemp1(&odometerService);
-    (void)Odo_RecordTemp2(&odometerService);
-    (void)Odo_RecordTemp3(&odometerService);
+	Odo_RecordMeasurements(&odometerService);
 }
 
 /*! *********************************************************************************
@@ -478,7 +474,11 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
             handle = pServerEvent->eventData.attributeWrittenEvent.handle;
             status = (uint8_t)gAttErrCodeNoError_c;
 
+            GattDb_WriteAttribute(pServerEvent->eventData.attributeWrittenEvent.handle,
 
+								  pServerEvent->eventData.attributeWrittenEvent.cValueLength,
+
+								  pServerEvent->eventData.attributeWrittenEvent.aValue );
 			(void)GattServer_SendAttributeWrittenStatus(deviceId, handle, status);
 
             break;

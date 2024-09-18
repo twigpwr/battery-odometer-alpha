@@ -855,7 +855,7 @@ bleResult_t App_RegisterGattServerCallback(gattServerCallback_t  serverCallback)
 {
     pfGattServerCallback = serverCallback;
 
-    return GattServer_RegisterCallback(App_GattServerCallback);
+    return GattServer_RegisterCallback(pfGattServerCallback);
 }
 
 /*! *********************************************************************************
@@ -870,7 +870,7 @@ bleResult_t App_RegisterGattClientProcedureCallback(gattClientProcedureCallback_
 {
     pfGattClientProcCallback = callback;
 
-    return GattClient_RegisterProcedureCallback(App_GattClientProcedureCallback);
+    return GattClient_RegisterProcedureCallback(pfGattClientProcCallback);
 }
 
 /*! *********************************************************************************
@@ -885,7 +885,7 @@ bleResult_t App_RegisterGattClientNotificationCallback(gattClientNotificationCal
 {
     pfGattClientNotifCallback = callback;
 
-    return GattClient_RegisterNotificationCallback(App_GattClientNotificationCallback);
+    return GattClient_RegisterNotificationCallback(pfGattClientNotifCallback);
 }
 
 /*! *********************************************************************************

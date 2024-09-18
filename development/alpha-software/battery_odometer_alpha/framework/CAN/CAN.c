@@ -26,6 +26,8 @@ uint8_t TX_MESSAGE_BUFFER_NUM, RX_MESSAGE_BUFFER_NUM;
 /*CAN Callback Function*/
 static void flexcan_callback(CAN_Type *base, flexcan_handle_t *handle, status_t status, uint32_t result, void *userData)
 {
+//	uint16_t tempVar;
+//	uint16_t tempVar1;
 
     switch (status)
     {
@@ -34,21 +36,38 @@ static void flexcan_callback(CAN_Type *base, flexcan_handle_t *handle, status_t 
             {
 				switch(rxFrame.id)
 				{
-				case (FLEXCAN_ID_STD(0x8)):
-						battV = rxFrame.dataWord0 >> 16;
-						break;
-				case (FLEXCAN_ID_STD(0x9)):
-						temp1 = rxFrame.dataByte0;
-						break;
-				case (FLEXCAN_ID_STD(0xA)):
-						temp2 = rxFrame.dataByte0;
-						break;
-				case (FLEXCAN_ID_STD(0xB)):
-						battI = rxFrame.dataWord0 >> 16;
-						break;
-				case (FLEXCAN_ID_STD(0x7)):
-						temp3 = rxFrame.dataByte0;
-						break;
+				case (BATTERY_VOLTAGE):
+					battV = rxFrame.dataWord0 >> 16;
+					break;
+				case (BATTERY_TEMP1):
+					temp1 = rxFrame.dataByte0;
+					break;
+				case (BATTERY_TEMP2):
+					temp2 = rxFrame.dataByte0;
+					break;
+				case (BATTERY_I):
+					battI = rxFrame.dataWord0 >> 16;
+					break;
+				case (PCB_TEMP):
+					temp3 = rxFrame.dataByte0;
+					break;
+				case (ACCL_DATA_RAW):
+					accel_x = (uint16_t)(rxFrame.dataWord0 >> 16);
+					accel_y = (uint16_t)(rxFrame.dataWord0);
+					accel_z = (uint16_t)(rxFrame.dataWord1 >> 16);
+					break;
+				case (JERK_DATA_X_RAW):
+					jerk_x = rxFrame.dataWord0;
+					break;
+				case (JERK_DATA_Y_RAW):
+					jerk_y = rxFrame.dataWord0;
+					break;
+				case (JERK_DATA_Z_RAW):
+					jerk_z = rxFrame.dataWord0;
+					break;
+				case (BATT_DIAG_DATA):
+					diag_val = (uint16_t)(rxFrame.dataWord0 >> 16);
+					break;
 				default:
 					break;
 				}
