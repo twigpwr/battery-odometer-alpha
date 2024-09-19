@@ -369,6 +369,8 @@ static l2caLeCbControlCallback_t        pfL2caLeCbControlCallback = NULL;
 static anchor_t mHostAppInputQueue;
 static anchor_t mAppCbInputQueue;
 
+bool test = false;
+
 /************************************************************************************
 *************************************************************************************
 * Public memory declarations
@@ -519,6 +521,7 @@ void main_task(uint32_t param)
 #endif
     }
 
+//    BleApp_Start();
     /* Call application task */
     App_Thread( param );
 }
@@ -560,6 +563,11 @@ void App_Thread (uint32_t param)
                 /* Messages must always be freed. */
                 (void)MSG_Free(pMsgIn);
             }
+        }
+        if(!test)
+        {
+        	BleApp_Start();
+        	test = true;
         }
 
         receiveMessage(0);
@@ -855,7 +863,7 @@ bleResult_t App_RegisterGattServerCallback(gattServerCallback_t  serverCallback)
 {
     pfGattServerCallback = serverCallback;
 
-    return GattServer_RegisterCallback(pfGattServerCallback);
+    return GattServer_RegisterCallback(App_GattServerCallback);
 }
 
 /*! *********************************************************************************
@@ -870,7 +878,7 @@ bleResult_t App_RegisterGattClientProcedureCallback(gattClientProcedureCallback_
 {
     pfGattClientProcCallback = callback;
 
-    return GattClient_RegisterProcedureCallback(pfGattClientProcCallback);
+    return GattClient_RegisterProcedureCallback(App_GattClientProcedureCallback);
 }
 
 /*! *********************************************************************************
@@ -885,7 +893,7 @@ bleResult_t App_RegisterGattClientNotificationCallback(gattClientNotificationCal
 {
     pfGattClientNotifCallback = callback;
 
-    return GattClient_RegisterNotificationCallback(pfGattClientNotifCallback);
+    return GattClient_RegisterNotificationCallback(App_GattClientNotificationCallback);
 }
 
 /*! *********************************************************************************

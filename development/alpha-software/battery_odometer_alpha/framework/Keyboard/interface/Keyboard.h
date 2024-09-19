@@ -20,7 +20,7 @@
  * Description: Enables/disables the switches based keyboard
  */
 #ifndef gKeyBoardSupported_d
-#define gKeyBoardSupported_d                1
+#define gKeyBoardSupported_d                0
 #endif
 
 /*

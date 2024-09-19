@@ -22,7 +22,7 @@
  *     Board Configuration
  ********************************************************************************** */
  /* Defines the number of required keys for the keyboard module */
-#define gKBD_KeysCount_c        2
+#define gKBD_KeysCount_c        0
 
 /* Specifies the number of required LEDs for the LED module */
 #define gLEDsOnTargetBoardCnt_c 4
