@@ -131,7 +131,7 @@ uint32_t LPUART_Initialize(uint32_t instance, uartState_t *pState)
            pState->txSize = 0;
            initialized = TRUE;
        }
-       BOARD_InitLPUART();
+//       BOARD_InitLPUART();
        LPUART_GetDefaultConfig(&config);
        config.enableRx = TRUE;
        config.enableTx = TRUE;

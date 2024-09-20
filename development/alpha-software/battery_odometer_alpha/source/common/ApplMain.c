@@ -15,7 +15,7 @@
 *************************************************************************************
 ************************************************************************************/
 /* Drv */
-#include "LED.h"
+//#include "LED.h"
 
 /* Fwk */
 #include "fsl_os_abstraction.h"
@@ -444,7 +444,8 @@ void main_task(uint32_t param)
         (void)RNG_Init();
         RNG_SetPseudoRandomNoSeed(NULL);
 #endif /* MULTICORE_APPLICATION_CORE */
-        LED_Init();
+        //LED_Init();
+        BOARD_InitBootPins();
         BOARD_InitPeripherals();
         CAN_Init();
         receiveMessage(0);
@@ -475,10 +476,10 @@ void main_task(uint32_t param)
         PWR_Init();
         PWR_DisallowDeviceToSleep();
 #else
-        Led1Flashing();
-        Led2Flashing();
-        Led3Flashing();
-        Led4Flashing();
+//        Led1Flashing();
+//        Led2Flashing();
+//        Led3Flashing();
+//        Led4Flashing();
 #endif
 
         /* Initialize peripheral drivers specific to the application */

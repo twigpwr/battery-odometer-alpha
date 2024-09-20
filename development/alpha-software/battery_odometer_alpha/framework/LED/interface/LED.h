@@ -17,7 +17,7 @@
 #include "board.h"
 
 #ifndef gLEDSupported_d
-#define gLEDSupported_d                 1U
+#define gLEDSupported_d                 0U
 #endif
 
 #if (defined(gLEDSupported_d) && (gLEDSupported_d > 0U))

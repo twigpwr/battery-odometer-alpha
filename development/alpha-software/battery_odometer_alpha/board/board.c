@@ -39,7 +39,6 @@
 #include "DCDC.h"
 #endif
 
-#include "Keyboard.h"
 #include "SerialManager.h"
 #include "Flash_Adapter.h"
 #include "fsl_rtc.h"

@@ -23,20 +23,30 @@
          <pins_profile>
             <processor_version>9.0.1</processor_version>
             <pin_labels>
-               <pin_label pin_num="37" pin_signal="PTC1/RF_EARLY_WARNING/ANT_B/I2C0_SDA/LPUART0_RTS_b/TPM0_CH2/SPI1_SCK" label="LED_R" identifier="LED_R"/>
-               <pin_label pin_num="4" pin_signal="PTA16/LLWU_P4/SPI1_SOUT/LPUART1_RTS_b/TPM0_CH0" label="LED_G" identifier="LED_G"/>
-               <pin_label pin_num="18" pin_signal="ADC0_SE3/CMP0_IN3/PTB2/RF_NOT_ALLOWED/LLWU_P9/DTM_TX/TPM0_CH0/TPM1_CH0/TPM2_CH0" label="LED_B" identifier="LED_B"/>
-               <pin_label pin_num="19" pin_signal="ADC0_SE2/CMP0_IN4/PTB3/ERCLK32K/RF_ACTIVE/LPUART1_RTS_b/TPM0_CH1/CLKOUT/TPM1_CH1/RTC_CLKOUT/TPM2_CH1" label="LED" identifier="LED"/>
-               <pin_label pin_num="23" pin_signal="ADC0_SE4/CMP0_IN2/PTB18/LPUART1_CTS_b/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b" label="SW2" identifier="SW2"/>
-               <pin_label pin_num="38" pin_signal="PTC2/LLWU_P10/TX_SWITCH/I2C1_SCL/LPUART0_RX/CMT_IRO/DTM_RX/SPI1_SOUT" label="SW3" identifier="SW3"/>
-               <pin_label pin_num="42" pin_signal="PTC6/LLWU_P14/RF_RFOSC_EN/I2C1_SCL/LPUART0_RX/TPM2_CH0" label="LPUART0_RX" identifier="LPUART0_RX"/>
-               <pin_label pin_num="43" pin_signal="PTC7/LLWU_P15/SPI0_PCS2/I2C1_SDA/LPUART0_TX/TPM2_CH1" label="LPUART0_TX" identifier="LPUART0_TX"/>
-               <pin_label pin_num="6" pin_signal="PTA18/LLWU_P6/SPI1_SCK/LPUART1_TX/CAN0_RX/TPM2_CH0" label="LPUART1_TX" identifier="LPUART1_TX"/>
-               <pin_label pin_num="5" pin_signal="PTA17/LLWU_P5/SPI1_SIN/LPUART1_RX/CAN0_TX/TPM_CLKIN1" label="LPUART1_RX" identifier="LPUART1_RX"/>
+               <pin_label pin_num="37" pin_signal="PTC1/RF_EARLY_WARNING/ANT_B/I2C0_SDA/LPUART0_RTS_b/TPM0_CH2/SPI1_SCK" label="SPI1_CLK" identifier="LED_R;SPI1_CLK"/>
+               <pin_label pin_num="4" pin_signal="PTA16/LLWU_P4/SPI1_SOUT/LPUART1_RTS_b/TPM0_CH0" label="CAN0_STB" identifier="LED_G;CAN0_STB"/>
+               <pin_label pin_num="18" pin_signal="ADC0_SE3/CMP0_IN3/PTB2/RF_NOT_ALLOWED/LLWU_P9/DTM_TX/TPM0_CH0/TPM1_CH0/TPM2_CH0" label="BATT_T2" identifier="LED_B;BATT_T2"/>
+               <pin_label pin_num="19" pin_signal="ADC0_SE2/CMP0_IN4/PTB3/ERCLK32K/RF_ACTIVE/LPUART1_RTS_b/TPM0_CH1/CLKOUT/TPM1_CH1/RTC_CLKOUT/TPM2_CH1" label="BATT_T1" identifier="LED;BATT_T1"/>
+               <pin_label pin_num="23" pin_signal="ADC0_SE4/CMP0_IN2/PTB18/LPUART1_CTS_b/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b" label="PCB_T3" identifier="SW2;PCB_T3"/>
+               <pin_label pin_num="38" pin_signal="PTC2/LLWU_P10/TX_SWITCH/I2C1_SCL/LPUART0_RX/CMT_IRO/DTM_RX/SPI1_SOUT" label="SPI1_MOSI" identifier="SW3;SPI1_MOSI"/>
+               <pin_label pin_num="42" pin_signal="PTC6/LLWU_P14/RF_RFOSC_EN/I2C1_SCL/LPUART0_RX/TPM2_CH0" label="TP3" identifier="LPUART0_RX;TP3"/>
+               <pin_label pin_num="43" pin_signal="PTC7/LLWU_P15/SPI0_PCS2/I2C1_SDA/LPUART0_TX/TPM2_CH1" label="TP1" identifier="LPUART0_TX;TP1"/>
+               <pin_label pin_num="6" pin_signal="PTA18/LLWU_P6/SPI1_SCK/LPUART1_TX/CAN0_RX/TPM2_CH0" label="J1[7]/U7[2]/U10[4]/D6/LIN_TX_LS/CAN0_RX/CAN0_RX/CAN0_RX" identifier="LPUART1_TX"/>
+               <pin_label pin_num="5" pin_signal="PTA17/LLWU_P5/SPI1_SIN/LPUART1_RX/CAN0_TX/TPM_CLKIN1" label="J1[5]/U10[1]/U12[4]/D4/LIN_RX_LS/CAN0_TX/CAN0_TX/CAN0_TX" identifier="LPUART1_RX"/>
+               <pin_label pin_num="39" pin_signal="PTC3/LLWU_P11/RX_SWITCH/I2C1_SDA/LPUART0_TX/TPM0_CH1/DTM_TX/SPI1_SIN/CAN0_TX" label="SPI1_MISO" identifier="SPI1_MISO"/>
+               <pin_label pin_num="40" pin_signal="PTC4/LLWU_P12/RF_ACTIVE/ANT_A/EXTRG_IN/LPUART0_CTS_b/TPM1_CH0/I2C0_SCL/SPI1_PCS0/CAN0_RX" label="SPI1_CS" identifier="SPI1_CS"/>
+               <pin_label pin_num="45" pin_signal="PTC16/LLWU_P0/RF_STATUS/SPI0_SCK/I2C0_SDA/LPUART0_RTS_b/TPM0_CH3/LPUART1_RTS_b" label="SPI0_CLK" identifier="SPI0_CLK"/>
+               <pin_label pin_num="46" pin_signal="PTC17/LLWU_P1/RF_EXT_OSC_EN/SPI0_SOUT/I2C1_SCL/LPUART0_RX/DTM_RX/LPUART1_RX" label="SPI0_MOSI" identifier="SPI0_MOSI"/>
+               <pin_label pin_num="47" pin_signal="PTC18/LLWU_P2/SPI0_SIN/I2C1_SDA/LPUART0_TX/DTM_TX/LPUART1_TX" label="SPI0_MISO" identifier="SPI0_MISO"/>
+               <pin_label pin_num="48" pin_signal="PTC19/LLWU_P3/RF_EARLY_WARNING/SPI0_PCS0/I2C0_SCL/LPUART0_CTS_b/LPUART1_CTS_b" label="SPI0_CS" identifier="SPI0_CS"/>
+               <pin_label pin_num="16" pin_signal="PTB0/LLWU_P8/RF_RFOSC_EN/I2C0_SCL/CMP0_OUT/TPM0_CH1/CLKOUT/CAN0_TX" label="VDD_5V_EN" identifier="VDD_5V_EN"/>
+               <pin_label pin_num="41" pin_signal="PTC5/LLWU_P13/RF_NOT_ALLOWED/RF_PRIORITY/LPTMR0_ALT2/LPUART0_RTS_b/TPM1_CH1" label="TP2" identifier="TP2"/>
+               <pin_label pin_num="7" pin_signal="ADC0_SE5/PTA19/LLWU_P7/SPI1_PCS0/LPUART1_CTS_b/TPM2_CH1" label="BATT_V" identifier="BATT_V"/>
+               <pin_label pin_num="17" pin_signal="ADC0_SE1/CMP0_IN5/PTB1/RF_PRIORITY/DTM_RX/I2C0_SDA/LPTMR0_ALT1/TPM0_CH2/CMT_IRO/CAN0_RX" label="BATT_I" identifier="BATT_I"/>
             </pin_labels>
          </pins_profile>
          <functions_list>
-            <function name="BOARD_InitLPUART">
+            <function name="BOARD_InitPins">
                <description>Configures pin routing and optionally pin electrical features.</description>
                <options>
                   <callFromInitBoot>true</callFromInitBoot>
@@ -44,28 +54,15 @@
                   <enableClock>true</enableClock>
                </options>
                <dependencies>
-                  <dependency resourceType="Peripheral" resourceId="LPUART0" description="Peripheral LPUART0 is not initialized" problem_level="1" source="Pins:BOARD_InitLPUART">
-                     <feature name="initialized" evaluation="equal">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitLPUART">
-                     <feature name="enabled" evaluation="equal" configuration="core0">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitLPUART">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
                </dependencies>
-               <pins>
-                  <pin peripheral="LPUART0" signal="RX" pin_num="42" pin_signal="PTC6/LLWU_P14/RF_RFOSC_EN/I2C1_SCL/LPUART0_RX/TPM2_CH0"/>
-                  <pin peripheral="LPUART0" signal="TX" pin_num="43" pin_signal="PTC7/LLWU_P15/SPI0_PCS2/I2C1_SDA/LPUART0_TX/TPM2_CH1"/>
-               </pins>
+               <pins/>
             </function>
-            <function name="BOARD_InitLEDs">
+            <function name="BOARD_InitButtonsPins">
                <description>Configures pin routing and optionally pin electrical features.</description>
                <options>
                   <callFromInitBoot>true</callFromInitBoot>
@@ -73,53 +70,75 @@
                   <enableClock>true</enableClock>
                </options>
                <dependencies>
-                  <dependency resourceType="Peripheral" resourceId="CAN0" description="Peripheral CAN0 is not initialized" problem_level="1" source="Pins:BOARD_InitLEDs">
-                     <feature name="initialized" evaluation="equal">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitLEDs">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitButtonsPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitLEDs">
+               </dependencies>
+               <pins/>
+            </function>
+            <function name="BOARD_InitLEDsPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitLEDsPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.gpio" description="Pins initialization requires the GPIO Driver in the project." problem_level="2" source="Pins:BOARD_InitLEDs">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitLEDsPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.gpio" description="Pins initialization requires the GPIO Driver in the project." problem_level="2" source="Pins:BOARD_InitLEDsPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
                </dependencies>
                <pins>
-                  <pin peripheral="GPIOB" signal="GPIO, 3" pin_num="19" pin_signal="ADC0_SE2/CMP0_IN4/PTB3/ERCLK32K/RF_ACTIVE/LPUART1_RTS_b/TPM0_CH1/CLKOUT/TPM1_CH1/RTC_CLKOUT/TPM2_CH1">
+                  <pin peripheral="GPIOB" signal="GPIO, 0" pin_num="16" pin_signal="PTB0/LLWU_P8/RF_RFOSC_EN/I2C0_SCL/CMP0_OUT/TPM0_CH1/CLKOUT/CAN0_TX">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="GPIOC" signal="GPIO, 1" pin_num="37" pin_signal="PTC1/RF_EARLY_WARNING/ANT_B/I2C0_SDA/LPUART0_RTS_b/TPM0_CH2/SPI1_SCK">
-                     <pin_features>
-                        <pin_feature name="direction" value="OUTPUT"/>
-                     </pin_features>
-                  </pin>
-                  <pin peripheral="GPIOB" signal="GPIO, 2" pin_num="18" pin_signal="ADC0_SE3/CMP0_IN3/PTB2/RF_NOT_ALLOWED/LLWU_P9/DTM_TX/TPM0_CH0/TPM1_CH0/TPM2_CH0">
-                     <pin_features>
-                        <pin_feature name="direction" value="OUTPUT"/>
+                        <pin_feature name="gpio_init_state" value="true"/>
                      </pin_features>
                   </pin>
                   <pin peripheral="GPIOA" signal="GPIO, 16" pin_num="4" pin_signal="PTA16/LLWU_P4/SPI1_SOUT/LPUART1_RTS_b/TPM0_CH0">
                      <pin_features>
+                        <pin_feature name="identifier" value="CAN0_STB"/>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
+                        <pin_feature name="pull_select" value="no_init"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 5" pin_num="41" pin_signal="PTC5/LLWU_P13/RF_NOT_ALLOWED/RF_PRIORITY/LPTMR0_ALT2/LPUART0_RTS_b/TPM1_CH1">
+                     <pin_features>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 6" pin_num="42" pin_signal="PTC6/LLWU_P14/RF_RFOSC_EN/I2C1_SCL/LPUART0_RX/TPM2_CH0">
+                     <pin_features>
+                        <pin_feature name="identifier" value="TP3"/>
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
-                  <pin peripheral="CAN0" signal="TX" pin_num="39" pin_signal="PTC3/LLWU_P11/RX_SWITCH/I2C1_SDA/LPUART0_TX/TPM0_CH1/DTM_TX/SPI1_SIN/CAN0_TX"/>
-                  <pin peripheral="CAN0" signal="RX" pin_num="40" pin_signal="PTC4/LLWU_P12/RF_ACTIVE/ANT_A/EXTRG_IN/LPUART0_CTS_b/TPM1_CH0/I2C0_SCL/SPI1_PCS0/CAN0_RX"/>
+                  <pin peripheral="GPIOC" signal="GPIO, 7" pin_num="43" pin_signal="PTC7/LLWU_P15/SPI0_PCS2/I2C1_SDA/LPUART0_TX/TPM2_CH1">
+                     <pin_features>
+                        <pin_feature name="identifier" value="TP1"/>
+                        <pin_feature name="direction" value="OUTPUT"/>
+                        <pin_feature name="gpio_init_state" value="false"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
-            <function name="BOARD_InitButtons">
+            <function name="BOARD_InitSPIPins">
                <description>Configures pin routing and optionally pin electrical features.</description>
                <options>
                   <callFromInitBoot>true</callFromInitBoot>
@@ -127,33 +146,162 @@
                   <enableClock>true</enableClock>
                </options>
                <dependencies>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitButtons">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitSPIPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitButtons">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitSPIPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.gpio" description="Pins initialization requires the GPIO Driver in the project." problem_level="2" source="Pins:BOARD_InitButtons">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.gpio" description="Pins initialization requires the GPIO Driver in the project." problem_level="2" source="Pins:BOARD_InitSPIPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
                      </feature>
                   </dependency>
                </dependencies>
                <pins>
-                  <pin peripheral="GPIOB" signal="GPIO, 18" pin_num="23" pin_signal="ADC0_SE4/CMP0_IN2/PTB18/LPUART1_CTS_b/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b">
+                  <pin peripheral="GPIOC" signal="GPIO, 1" pin_num="37" pin_signal="PTC1/RF_EARLY_WARNING/ANT_B/I2C0_SDA/LPUART0_RTS_b/TPM0_CH2/SPI1_SCK">
                      <pin_features>
+                        <pin_feature name="identifier" value="SPI1_CLK"/>
                         <pin_feature name="direction" value="INPUT"/>
-                        <pin_feature name="pull_enable" value="enable"/>
                      </pin_features>
                   </pin>
                   <pin peripheral="GPIOC" signal="GPIO, 2" pin_num="38" pin_signal="PTC2/LLWU_P10/TX_SWITCH/I2C1_SCL/LPUART0_RX/CMT_IRO/DTM_RX/SPI1_SOUT">
                      <pin_features>
+                        <pin_feature name="identifier" value="SPI1_MOSI"/>
                         <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 3" pin_num="39" pin_signal="PTC3/LLWU_P11/RX_SWITCH/I2C1_SDA/LPUART0_TX/TPM0_CH1/DTM_TX/SPI1_SIN/CAN0_TX">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 4" pin_num="40" pin_signal="PTC4/LLWU_P12/RF_ACTIVE/ANT_A/EXTRG_IN/LPUART0_CTS_b/TPM1_CH0/I2C0_SCL/SPI1_PCS0/CAN0_RX">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 16" pin_num="45" pin_signal="PTC16/LLWU_P0/RF_STATUS/SPI0_SCK/I2C0_SDA/LPUART0_RTS_b/TPM0_CH3/LPUART1_RTS_b">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 17" pin_num="46" pin_signal="PTC17/LLWU_P1/RF_EXT_OSC_EN/SPI0_SOUT/I2C1_SCL/LPUART0_RX/DTM_RX/LPUART1_RX">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 18" pin_num="47" pin_signal="PTC18/LLWU_P2/SPI0_SIN/I2C1_SDA/LPUART0_TX/DTM_TX/LPUART1_TX">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                        <pin_feature name="passive_filter" value="disable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOC" signal="GPIO, 19" pin_num="48" pin_signal="PTC19/LLWU_P3/RF_EARLY_WARNING/SPI0_PCS0/I2C0_SCL/LPUART0_CTS_b/LPUART1_CTS_b">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+               </pins>
+            </function>
+            <function name="BOARD_InitCANPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="Peripheral" resourceId="CAN0" description="Peripheral CAN0 is not initialized" problem_level="1" source="Pins:BOARD_InitCANPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitCANPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitCANPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="CAN0" signal="TX" pin_num="5" pin_signal="PTA17/LLWU_P5/SPI1_SIN/LPUART1_RX/CAN0_TX/TPM_CLKIN1">
+                     <pin_features>
+                        <pin_feature name="identifier" value=""/>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="CAN0" signal="RX" pin_num="6" pin_signal="PTA18/LLWU_P6/SPI1_SCK/LPUART1_TX/CAN0_RX/TPM2_CH0">
+                     <pin_features>
+                        <pin_feature name="identifier" value=""/>
                         <pin_feature name="pull_enable" value="enable"/>
+                     </pin_features>
+                  </pin>
+               </pins>
+            </function>
+            <function name="BOARD_InitADCPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <coreID>core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitADCPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitADCPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.gpio" description="Pins initialization requires the GPIO Driver in the project." problem_level="2" source="Pins:BOARD_InitADCPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="GPIOA" signal="GPIO, 19" pin_num="7" pin_signal="ADC0_SE5/PTA19/LLWU_P7/SPI1_PCS0/LPUART1_CTS_b/TPM2_CH1">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOB" signal="GPIO, 2" pin_num="18" pin_signal="ADC0_SE3/CMP0_IN3/PTB2/RF_NOT_ALLOWED/LLWU_P9/DTM_TX/TPM0_CH0/TPM1_CH0/TPM2_CH0">
+                     <pin_features>
+                        <pin_feature name="identifier" value="BATT_T2"/>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOB" signal="GPIO, 3" pin_num="19" pin_signal="ADC0_SE2/CMP0_IN4/PTB3/ERCLK32K/RF_ACTIVE/LPUART1_RTS_b/TPM0_CH1/CLKOUT/TPM1_CH1/RTC_CLKOUT/TPM2_CH1">
+                     <pin_features>
+                        <pin_feature name="identifier" value="BATT_T1"/>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOB" signal="GPIO, 1" pin_num="17" pin_signal="ADC0_SE1/CMP0_IN5/PTB1/RF_PRIORITY/DTM_RX/I2C0_SDA/LPTMR0_ALT1/TPM0_CH2/CMT_IRO/CAN0_RX">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="GPIOB" signal="GPIO, 18" pin_num="23" pin_signal="ADC0_SE4/CMP0_IN2/PTB18/LPUART1_CTS_b/I2C1_SCL/TPM_CLKIN0/TPM0_CH0/NMI_b">
+                     <pin_features>
+                        <pin_feature name="identifier" value="PCB_T3"/>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                        <pin_feature name="passive_filter" value="disable"/>
                      </pin_features>
                   </pin>
                </pins>

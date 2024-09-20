@@ -23,8 +23,8 @@
 
 /* Framework / Drivers */
 #include "RNG_Interface.h"
-#include "Keyboard.h"
-#include "LED.h"
+//#include "Keyboard.h"
+//#include "LED.h"
 #include "TimersManager.h"
 #include "FunctionLib.h"
 #include "Panic.h"
@@ -149,7 +149,7 @@ static void BleApp_Advertise(void);
 void BleApp_Init(void)
 {
     /* Initialize application support for drivers */
-    BOARD_InitAdc();
+//    BOARD_InitAdc();
 
 #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
     /* Init eRPC host */
@@ -289,7 +289,7 @@ static void BleApp_Config(void)
 
     mAdvState.advOn = FALSE;
 
-    basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
+    basServiceConfig.batteryLevel = 0;
     (void)Bas_Start(&basServiceConfig);
     (void)Dis_Start(&disServiceConfig);
     (void)Odo_Start(&odometerService);
@@ -362,14 +362,14 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
         case gAdvertisingStateChanged_c:
         {
             mAdvState.advOn = !mAdvState.advOn;
-            LED_StopFlashingAllLeds();
-            Led1Flashing();
+//            LED_StopFlashingAllLeds();
+//            Led1Flashing();
 
             if(!mAdvState.advOn)
             {
-                Led2Flashing();
-                Led3Flashing();
-                Led4Flashing();
+//                Led2Flashing();
+//                Led3Flashing();
+//                Led4Flashing();
             }
             else
             {
@@ -422,8 +422,8 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             (void)Odo_Subscribe(peerDeviceId);
 
             /* UI */
-            LED_StopFlashingAllLeds();
-            Led1On();
+//            LED_StopFlashingAllLeds();
+//            Led1On();
 
             /* Stop Advertising Timer*/
             (void)TMR_StopTimer(mAdvTimerId);
@@ -549,7 +549,7 @@ static void AdvertisingTimerCallback(void * pParam)
 ********************************************************************************** */
 static void BatteryMeasurementTimerCallback(void * pParam)
 {
-    basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
+    basServiceConfig.batteryLevel = 0;
     (void)Bas_RecordBatteryMeasurement(&basServiceConfig);
 }
 /*! *********************************************************************************

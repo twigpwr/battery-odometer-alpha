@@ -1123,7 +1123,7 @@ static bool_t LED_StartRgbDimming(LED_DimMode_t mode, uint8_t interval)
 ******************************************************************************/
 static void LED_HwInit(void)
 {
-    BOARD_InitLEDs();
+//    BOARD_InitLEDs();
     (void)GpioOutputPinInit(ledPins, gLEDsOnTargetBoardCnt_c);
 #if (defined(gLedRgbEnabled_d) && (gLedRgbEnabled_d > 0U))
     LED_RgbLedInit();

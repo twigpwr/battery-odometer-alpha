@@ -25,7 +25,7 @@
 #define gKBD_KeysCount_c        0
 
 /* Specifies the number of required LEDs for the LED module */
-#define gLEDsOnTargetBoardCnt_c 4
+#define gLEDsOnTargetBoardCnt_c 0
 
 /* Specifies if the LED operation is inverted. LED On = GPIO Set */
 #define gLED_InvertedMode_d     1
