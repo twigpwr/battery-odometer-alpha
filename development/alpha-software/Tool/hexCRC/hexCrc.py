@@ -9,7 +9,7 @@ import os
 '''
 File Path
 '''
-EXEFILE_PATH = r'..\..\battery_odometer_alpha\Debug'
+EXEFILE_PATH = r'..\..\battery_odometer_alpha\Release'
 HEX_INPUT = r'battery_odometer_alpha.hex'
 HEX_OUTPUT = r'battery_odometer_alpha_Crc.hex'
 PFLASH_HEX = r'P_Flash.hex'
@@ -22,7 +22,7 @@ DFLASH_BIN = r'D_Flash.bin'
 Address configuration.
 '''
 PFLASH_START_ADDR = '0x8000'
-PFLASH_END_ADDR = '0x7B7FF'
+PFLASH_END_ADDR = '0x3FFFF'
 
 DFLASH_START_ADDR = '0x10000800'
 DFLASH_END_ADDR = '0x1001FFFF'

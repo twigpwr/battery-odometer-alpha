@@ -19,7 +19,6 @@
 ********************************************************************************** */
 #include <battery_odometer.h>
 #include "EmbeddedTypes.h"
-#include "Keyboard.h"
 #include "l2ca_cb_interface.h"
 #include "ble_config.h"
 
@@ -95,7 +94,6 @@ void main_task(uint32_t param);
 #endif
 
 extern void BleApp_Init(void);
-extern void BleApp_HandleKeys(key_event_t events);
 
 extern uint8_t temp1;
 extern uint8_t temp2;

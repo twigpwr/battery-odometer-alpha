@@ -116,8 +116,6 @@ static tmrTimerID_t mBatteryMeasurementTimerId;
 static tmrTimerID_t mOdoMeasurementTimerId;
 static uint32_t     mAdvTimeout;
 
-static bool_t mReverseWheel = FALSE;
-
 /************************************************************************************
 *************************************************************************************
 * Private functions prototypes
@@ -189,34 +187,6 @@ void BleApp_Start(void)
 *
 * \param[in]    events    Key event structure.
 ********************************************************************************** */
-void BleApp_HandleKeys(key_event_t events)
-{
-    switch (events)
-    {
-        case gKBD_EventPressPB1_c:
-        {
-            BleApp_Start();
-            break;
-        }
-        case gKBD_EventPressPB2_c:
-        {
-            mReverseWheel = !mReverseWheel;
-            break;
-        }
-        case gKBD_EventLongPB1_c:
-        {
-            if (mPeerDeviceId != gInvalidDeviceId_c)
-            {
-                (void)Gap_Disconnect(mPeerDeviceId);
-            }
-            break;
-        }
-        case gKBD_EventLongPB2_c:
-        default:
-            ; /* For MISRA compliance */
-            break;
-    }
-}
 
 /*! *********************************************************************************
 * \brief        Handles BLE generic callback.
