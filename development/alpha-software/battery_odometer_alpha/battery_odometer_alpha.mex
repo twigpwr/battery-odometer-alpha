@@ -308,7 +308,7 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="false">
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="board/clock_config.c" update_enabled="true"/>
             <file path="board/clock_config.h" update_enabled="true"/>
@@ -355,24 +355,20 @@
                   <clock_output id="Core_clock.outFreq" value="40 MHz" locked="false" accuracy=""/>
                   <clock_output id="Flash_clock.outFreq" value="20 MHz" locked="false" accuracy=""/>
                   <clock_output id="LPO_clock.outFreq" value="1 kHz" locked="false" accuracy=""/>
-                  <clock_output id="LPUART0CLK.outFreq" value="32 MHz" locked="false" accuracy=""/>
-                  <clock_output id="LPUART1CLK.outFreq" value="32 MHz" locked="false" accuracy=""/>
                   <clock_output id="MCGFLLCLK.outFreq" value="40 MHz" locked="false" accuracy=""/>
+                  <clock_output id="MCGIRCLK.outFreq" value="32.768 kHz" locked="false" accuracy=""/>
                   <clock_output id="OSCERCLK.outFreq" value="32 MHz" locked="false" accuracy=""/>
                   <clock_output id="System_clock.outFreq" value="40 MHz" locked="false" accuracy=""/>
                   <clock_output id="TPMCLK.outFreq" value="32 MHz" locked="false" accuracy=""/>
                </clock_outputs>
                <clock_settings>
                   <setting id="MCGMode" value="FEE" locked="false"/>
-                  <setting id="LPUART0ClkConfig" value="yes" locked="false"/>
-                  <setting id="LPUART1ClkConfig" value="yes" locked="false"/>
                   <setting id="MCG.FLL_mul.scale" value="1280" locked="true"/>
                   <setting id="MCG.FRDIV.scale" value="1024" locked="true"/>
                   <setting id="MCG.IREFS.sel" value="MCG.FRDIV" locked="false"/>
+                  <setting id="MCG_C1_IRCLKEN_CFG" value="Enabled" locked="false"/>
                   <setting id="MCG_C2_RANGE0_FRDIV_CFG" value="Very_high" locked="false"/>
                   <setting id="MCG_C2_RANGE_CFG" value="Very_high" locked="false"/>
-                  <setting id="RTCCLKOUTConfig" value="yes" locked="false"/>
-                  <setting id="RTCClkConfig" value="user_code" locked="false"/>
                   <setting id="RTC_CR_OSCE_CFG" value="Oscillator_enabled" locked="false"/>
                   <setting id="SIM.LPUART0SRCSEL.sel" value="REFOSC.OSCCLK" locked="false"/>
                   <setting id="SIM.LPUART1SRCSEL.sel" value="REFOSC.OSCCLK" locked="false"/>

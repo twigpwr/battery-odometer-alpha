@@ -26,8 +26,6 @@ uint8_t TX_MESSAGE_BUFFER_NUM, RX_MESSAGE_BUFFER_NUM;
 /*CAN Callback Function*/
 static void flexcan_callback(CAN_Type *base, flexcan_handle_t *handle, status_t status, uint32_t result, void *userData)
 {
-//	uint16_t tempVar;
-//	uint16_t tempVar1;
 
     switch (status)
     {

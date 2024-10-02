@@ -115,7 +115,7 @@ def Hex_Crc_CalCrcBinaryFile (binFile):
     # Convert data to list.
     for value in binContent:
         data.append(value)
-        
+
     # Calculate the CRC 
     idx = 0
     crcResult = CRC_INIT_VALUE

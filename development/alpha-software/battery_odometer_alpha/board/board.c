@@ -26,6 +26,7 @@
 #include "RNG_Interface.h"
 #include "FunctionLib.h"
 #include "RNG_Interface.h"
+#include "peripherals.h"
 #if cPWR_UsePowerDownMode
 #include "PWR_Interface.h"
 #include "PWR_Configuration.h"
@@ -293,6 +294,12 @@ void hardware_init(void)
 
     initialized = 1;
  }
+
+void hardware_deinit(void)
+{
+	FLEXCAN_Deinit(CAN0_PERIPHERAL);
+	CLOCK_DeinitOsc0();
+}
 
 uint32_t BOARD_GetLpuartClock(uint32_t instance)
 {

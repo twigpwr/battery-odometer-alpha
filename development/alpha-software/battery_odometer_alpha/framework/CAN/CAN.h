@@ -14,6 +14,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "MKW38A4.h"
+#include "NvM_api.h"
 
 #include "odometer_interface.h"
 

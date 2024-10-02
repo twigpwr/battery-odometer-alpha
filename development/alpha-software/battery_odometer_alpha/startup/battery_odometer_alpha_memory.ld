@@ -12,19 +12,19 @@
 MEMORY
 {
   /* Define each memory region */
-  PROGRAM_FLASH (rx) : ORIGIN = 0x8000, LENGTH = 0x38000 /* 502K bytes (alias Flash) */  
+  PROGRAM_FLASH (rx) : ORIGIN = 0x000, LENGTH = 0x38000 /* 502K bytes (alias Flash) */  
   NVM_region (rx) : ORIGIN = 0x7d800, LENGTH = 0x2000 /* 8K bytes (alias Flash2) */  
   FREESCALE_PROD_DATA (rx) : ORIGIN = 0x7f800, LENGTH = 0x800 /* 2K bytes (alias Flash3) */  
-  SRAM (rwx) : ORIGIN = 0x1fffc6c0, LENGTH = 0xf940 /* 63808 bytes (alias RAM) */  
-  STACKSRAM (rwx) : ORIGIN = 0x1fffc0c0, LENGTH = 0x600 /* 1536 bytes (alias RAM2) */  
+  SRAM (rwx) : ORIGIN = 0x20000008, LENGTH = 0xbff8 /* 63808 bytes (alias RAM) */  
+  STACKSRAM (rwx) : ORIGIN = 0x1fffc400, LENGTH = 0x3c00 /* 1536 bytes (alias RAM2) */  
   RAM_VECTOR_TABLE (rwx) : ORIGIN = 0x1fffc000, LENGTH = 0xc0 /* 192 bytes (alias RAM3) */  
 }
 
   /* Define a symbol for the top of each memory region */
-  __base_PROGRAM_FLASH = 0x8000  ; /* PROGRAM_FLASH */  
-  __base_Flash = 0x8000 ; /* Flash */  
-  __top_PROGRAM_FLASH = 0x8000 + 0x38000 ; /* 502K bytes */  
-  __top_Flash = 0x8000 + 0x38000 ; /* 502K bytes */  
+  __base_PROGRAM_FLASH = 0x000  ; /* PROGRAM_FLASH */  
+  __base_Flash = 0x000 ; /* Flash */  
+  __top_PROGRAM_FLASH = 0x000 + 0x38000 ; /* 502K bytes */  
+  __top_Flash = 0x000 + 0x38000 ; /* 502K bytes */  
   __base_NVM_region = 0x7d800  ; /* NVM_region */  
   __base_Flash2 = 0x7d800 ; /* Flash2 */  
   __top_NVM_region = 0x7d800 + 0x2000 ; /* 8K bytes */  

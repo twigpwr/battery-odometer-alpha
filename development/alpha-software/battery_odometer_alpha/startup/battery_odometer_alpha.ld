@@ -219,7 +219,8 @@ SECTIONS
        KEEP(*(DataQuickAccess))
        *(RamFunction)
        *(.data*)
-       . = ALIGN(8) ;
+       . = . + 2 ;
+       . = ALIGN(256) ;
        _edata = . ;
        PROVIDE(__end_data_RAM = .) ;
        PROVIDE(__end_data_SRAM = .) ;

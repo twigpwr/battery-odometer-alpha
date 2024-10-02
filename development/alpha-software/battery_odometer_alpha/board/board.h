@@ -309,6 +309,7 @@ extern "C" {
  * API
  ******************************************************************************/
 void hardware_init(void);
+void hardware_deinit(void);
 
 /* Functions used to determine the frequency of a module's input clock. */
 uint32_t BOARD_GetLpuartClock(uint32_t instance);

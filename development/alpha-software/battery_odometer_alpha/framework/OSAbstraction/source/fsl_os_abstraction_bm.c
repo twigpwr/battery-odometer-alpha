@@ -23,6 +23,8 @@
 #include "board.h"
 #include <string.h>
 #include "GenericList.h"
+#include "NvM_api.h"
+#include "NvM.h"
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -1320,6 +1322,7 @@ void main (void)
     (void)OSA_Init();
     /* Initialize MCU clock */
     hardware_init();
+//    Bios_NvM_Init();
     OSA_TimeInit();
     (void)OSA_TaskCreate(OSA_TASK(main_task),NULL);
     OSA_Start();
