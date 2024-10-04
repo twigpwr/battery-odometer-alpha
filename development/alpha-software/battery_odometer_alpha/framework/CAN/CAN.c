@@ -26,6 +26,9 @@ uint8_t TX_MESSAGE_BUFFER_NUM, RX_MESSAGE_BUFFER_NUM;
 /*CAN Callback Function*/
 static void flexcan_callback(CAN_Type *base, flexcan_handle_t *handle, status_t status, uint32_t result, void *userData)
 {
+	tBootloaderInforType bootInfo;
+	Std_ReturnType ret = E_NOT_OK;
+	uint32_t reprogramFlag = FBL_BOOTM_PGM_REQUEST_FLAG_STATE_ON;
 
     switch (status)
     {
@@ -34,6 +37,36 @@ static void flexcan_callback(CAN_Type *base, flexcan_handle_t *handle, status_t 
             {
 				switch(rxFrame.id)
 				{
+				case XCP_MASTER_ID:
+					if(rxFrame.length >= XCP_MSG_LENGTH){
+						if((rxFrame.dataByte0 == XCP_CMD_CONNECT) && (rxFrame.dataByte1 == XCP_CONNECT_JUMP2BOOT)){
+							/* Disable interrupt */
+							 __disable_irq();
+
+							 ret = NvM_Read_BootloaderInfo (bootInfo);
+
+							 if (ret == E_OK)
+							 {
+								(void)memcpy ((uint8_t*)&bootInfo[FBL_BOOTM_BOOTINFO_REPROGRAM_IDX],
+											   (uint8_t*)&reprogramFlag,
+											   FBL_BOOTM_BOOTINFO_REPROGRAM_LEN);
+
+								NvM_Write_BootloaderInfo(bootInfo);
+
+								//Before triggering reset to jump to the bootloader
+								//Set the LVD to max range to mitigate transient power condition on chip reset
+								PMC->LVDSC1 = 0x10;
+								PMC->LVDSC2 = 0x00;
+
+								/* Disable the running peripheral. */
+								hardware_deinit();
+
+								/* Reset the micro-controller. */
+								NVIC_SystemReset();
+							 }
+						}
+					}
+					break;
 				case (BATTERY_VOLTAGE):
 					battV = rxFrame.dataWord0 >> 16;
 					break;

@@ -13,6 +13,9 @@
 #include "gatt_db_app_interface.h"
 #include "gatt_db_handles.h"
 
+__attribute__((section (".calibration_data")))
+uint16_t testCAL123 = 15;
+
 uint8_t temp1 = 10;
 uint8_t temp2 = 20;
 uint8_t temp3 = 30;
@@ -26,7 +29,6 @@ uint32_t jerk_y = 0;
 uint32_t jerk_z = 0;
 uint16_t diag_val = 0;
 bool zeroCal = false;
-uint16_t testVal = 0;
 
 /*! Cycling Speed Cadence Service - Subscribed Client */
 static deviceId_t odo_ClientDeviceId = gInvalidDeviceId_c;
@@ -97,8 +99,6 @@ void Odo_RecordMeasurements(odoConfig_t *pServiceConfig)
 	pServiceConfig->battery_voltage = battV;
 	pServiceConfig->battery_current = battI;
 	pServiceConfig->diag = diag_val;
-	testVal = accel_x;
-	testVal ++;
 
 	(void)Odo_RecordBatteryV(pServiceConfig);
 	(void)Odo_RecordBatteryI(pServiceConfig);

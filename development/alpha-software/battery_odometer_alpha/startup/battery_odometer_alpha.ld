@@ -61,20 +61,23 @@ SECTIONS
         LONG(LOADADDR(.data));
         LONG(    ADDR(.data));
         LONG(  SIZEOF(.data));
+        LONG(LOADADDR(.calibration_ram));
+        LONG(    ADDR(.calibration_ram));
+        LONG(  SIZEOF(.calibration_ram));
         LONG(LOADADDR(.data_RAM2));
         LONG(    ADDR(.data_RAM2));
         LONG(  SIZEOF(.data_RAM2));
-        LONG(LOADADDR(.data_RAM3));
-        LONG(    ADDR(.data_RAM3));
-        LONG(  SIZEOF(.data_RAM3));
+        LONG(LOADADDR(.data_RAM4));
+        LONG(    ADDR(.data_RAM4));
+        LONG(  SIZEOF(.data_RAM4));
         __data_section_table_end = .;
         __bss_section_table = .;
         LONG(    ADDR(.bss));
         LONG(  SIZEOF(.bss));
         LONG(    ADDR(.bss_RAM2));
         LONG(  SIZEOF(.bss_RAM2));
-        LONG(    ADDR(.bss_RAM3));
-        LONG(  SIZEOF(.bss_RAM3));
+        LONG(    ADDR(.bss_RAM4));
+        LONG(  SIZEOF(.bss_RAM4));
         __bss_section_table_end = .;
         __section_table_end = . ;
         /* End of Global Section Table */
@@ -131,6 +134,21 @@ SECTIONS
         . = ORIGIN(NVM_region) + LENGTH(NVM_region) - 1;
         BYTE(0xFF);
     } > NVM_region
+    
+    /*===================== DEFINES CALIBRATION SECTION ======================*/
+    
+    .calibration_data : ALIGN(256)
+    {
+        FILL(0xFF)
+        PROVIDE(__start_cal_data = .);
+        KEEP(*(.calibration_data))
+       . = . + 2 ;
+       . = ALIGN(256) ;
+        PROVIDE(__end_cal_data = .);
+    } > FLEX_NVM
+    
+    ASSERT( SIZEOF(.calibration_data) < 127K, "Too much data in NVM reagion in application." )
+    /*===================== END CALIBRATION SECTION ==========================*/
 
 
     /* Reserve and place Stack within memory map */
@@ -148,6 +166,16 @@ SECTIONS
         KEEP(*(.mtb.$RAM2*))
         KEEP(*(.mtb.$STACKSRAM*))
     } > STACKSRAM
+    
+    /* The Calibration Ram. */
+    .calibration_ram : ALIGN(256)
+    {
+        FILL(0xFF)
+        PROVIDE(__start_calibraion_ram = .);
+        KEEP(*(.cal_mem))
+        . = ALIGN(256);
+        PROVIDE(__end_calibration_ram = .);
+    } > SRAM AT>PROGRAM_FLASH
 
     /* DATA section for STACKSRAM */
 
@@ -168,27 +196,27 @@ SECTIONS
      } > STACKSRAM AT>PROGRAM_FLASH
 
     /* possible MTB section for RAM_VECTOR_TABLE */
-    .mtb_buffer_RAM3 (NOLOAD) :
+    .mtb_buffer_RAM4 (NOLOAD) :
     {
-        KEEP(*(.mtb.$RAM3*))
+        KEEP(*(.mtb.$RAM4*))
         KEEP(*(.mtb.$RAM_VECTOR_TABLE*))
     } > RAM_VECTOR_TABLE
 
     /* DATA section for RAM_VECTOR_TABLE */
 
-    .data_RAM3 : ALIGN(8)
+    .data_RAM4 : ALIGN(8)
     {
         FILL(0xff)
-        PROVIDE(__start_data_RAM3 = .) ;
+        PROVIDE(__start_data_RAM4 = .) ;
         PROVIDE(__start_data_RAM_VECTOR_TABLE = .) ;
-        *(.ramfunc.$RAM3)
+        *(.ramfunc.$RAM4)
         *(.ramfunc.$RAM_VECTOR_TABLE)
-        *(.data.$RAM3)
+        *(.data.$RAM4)
         *(.data.$RAM_VECTOR_TABLE)
-        *(.data.$RAM3.*)
+        *(.data.$RAM4.*)
         *(.data.$RAM_VECTOR_TABLE.*)
         . = ALIGN(8) ;
-        PROVIDE(__end_data_RAM3 = .) ;
+        PROVIDE(__end_data_RAM4 = .) ;
         PROVIDE(__end_data_RAM_VECTOR_TABLE = .) ;
      } > RAM_VECTOR_TABLE AT>PROGRAM_FLASH
 
@@ -207,7 +235,7 @@ SECTIONS
     } > SRAM AT> SRAM
 
     /* Main DATA section (SRAM) */
-    .data : ALIGN(8)
+    .data : ALIGN(256)
     {
        FILL(0xff)
        _data = . ;
@@ -241,16 +269,16 @@ SECTIONS
     } > STACKSRAM AT> STACKSRAM
 
     /* BSS section for RAM_VECTOR_TABLE */
-    .bss_RAM3 : ALIGN(8)
+    .bss_RAM4 : ALIGN(8)
     {
-       PROVIDE(__start_bss_RAM3 = .) ;
+       PROVIDE(__start_bss_RAM4 = .) ;
        PROVIDE(__start_bss_RAM_VECTOR_TABLE = .) ;
-       *(.bss.$RAM3)
+       *(.bss.$RAM4)
        *(.bss.$RAM_VECTOR_TABLE)
-       *(.bss.$RAM3.*)
+       *(.bss.$RAM4.*)
        *(.bss.$RAM_VECTOR_TABLE.*)
        . = ALIGN (. != 0 ? 8 : 1) ; /* avoid empty segment */
-       PROVIDE(__end_bss_RAM3 = .) ;
+       PROVIDE(__end_bss_RAM4 = .) ;
        PROVIDE(__end_bss_RAM_VECTOR_TABLE = .) ;
     } > RAM_VECTOR_TABLE AT> RAM_VECTOR_TABLE
 
@@ -284,16 +312,16 @@ SECTIONS
     } > STACKSRAM AT> STACKSRAM
 
     /* NOINIT section for RAM_VECTOR_TABLE */
-    .noinit_RAM3 (NOLOAD) : ALIGN(8)
+    .noinit_RAM4 (NOLOAD) : ALIGN(8)
     {
-       PROVIDE(__start_noinit_RAM3 = .) ;
+       PROVIDE(__start_noinit_RAM4 = .) ;
        PROVIDE(__start_noinit_RAM_VECTOR_TABLE = .) ;
-       *(.noinit.$RAM3)
+       *(.noinit.$RAM4)
        *(.noinit.$RAM_VECTOR_TABLE)
-       *(.noinit.$RAM3.*)
+       *(.noinit.$RAM4.*)
        *(.noinit.$RAM_VECTOR_TABLE.*)
        . = ALIGN(8) ;
-       PROVIDE(__end_noinit_RAM3 = .) ;
+       PROVIDE(__end_noinit_RAM4 = .) ;
        PROVIDE(__end_noinit_RAM_VECTOR_TABLE = .) ;
     } > RAM_VECTOR_TABLE AT> RAM_VECTOR_TABLE
 

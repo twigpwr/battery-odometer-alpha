@@ -67,6 +67,21 @@ extern flexcan_frame_t rxFrame;
 #define SNAPSHOT_ACCEL (0x0F3)
 #define SET_I_SENS_0_CAL (0x0F5)
 
+//XCP
+#define XCP_CONNECT_JUMP2BOOT (0xB0U)   /* Sub mode parameter used to indicate that a user mode connection is
+                                      being requested.                                                               */
+#define XCP_CMD_CONNECT       (0xFFU)   /* Command code indicating that an XCP master would like to establish
+									  an XCP connection.                                               			     */
+#define XCP_MASTER_ID 		  (FLEXCAN_ID_STD(0x200))
+#define XCP_MSG_LENGTH		  (2)
+
+/** The reprogram index in the boot information array. */
+#define FBL_BOOTM_BOOTINFO_REPROGRAM_IDX        (0U)
+/** The reprogram flag length in byte. */
+#define FBL_BOOTM_BOOTINFO_REPROGRAM_LEN        (4U)
+
+typedef uint8_t tBootloaderInforType [32U];
+
 void CAN_Init(void);
 
 void CANmessenger(volatile uint32_t word[],  uint16_t CANaddress);

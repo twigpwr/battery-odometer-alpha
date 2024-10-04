@@ -18,6 +18,8 @@
 //#include "LED.h"
 
 /* Fwk */
+#include "fsl_common.h"
+#include "fsl_cop.h"
 #include "fsl_os_abstraction.h"
 #include "MemManager.h"
 #include "TimersManager.h"
@@ -522,7 +524,6 @@ void main_task(uint32_t param)
 #endif
     }
 
-//    BleApp_Start();
     /* Call application task */
     App_Thread( param );
 }
@@ -703,6 +704,14 @@ static void App_Idle_Task(osaTaskParam_t argument)
 {
     for (;;)
     {
+
+//    	COP_Refresh(SIM);
+
+    	if(!test)
+		{
+			BleApp_Start();
+			test = true;
+		}
 
 #ifdef CPU_QN908X
 #if (defined(BOARD_XTAL1_CLK_HZ) && (BOARD_XTAL1_CLK_HZ != CLK_XTAL_32KHZ))
